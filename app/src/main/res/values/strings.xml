@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">AlarminumApp</string>
+    <string name="add_word">Add alarm</string>
+    <string name="empty_not_saved">Alarm not saved because it is empty.</string>
+    <string name="saved">Alarm saved!</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
