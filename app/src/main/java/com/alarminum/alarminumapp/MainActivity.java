@@ -8,6 +8,8 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -16,7 +18,8 @@ import androidx.fragment.app.FragmentTransaction;
 import com.alarminum.alarminumapp.database.AlarmEntity;
 import com.alarminum.alarminumapp.database.TimerEntity;
 import com.alarminum.alarminumapp.viewmodel.AlarmViewModel;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.leinardi.android.speeddial.SpeedDialActionItem;
+import com.leinardi.android.speeddial.SpeedDialView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private AlarmViewModel alarmViewModel;
@@ -51,18 +54,47 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         alarmPageButton.setOnClickListener(this);
         timerPageButton.setOnClickListener(this);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(view -> {
-            Fragment currentFragment =  fragmentManager.findFragmentById(R.id.fragment_container);
-            Intent intent;
-            if(currentFragment instanceof AlarmFragment) {
-                intent = new Intent(MainActivity.this, AlarmActivity.class);
-                startActivityForResult(intent, NEW_ALARM_ACTIVITY_REQUEST_CODE);
-//                intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
-//                startActivity(intent);
-            } else if (currentFragment instanceof TimerFragment) {
-                intent = new Intent(MainActivity.this, TimerActivity.class);
-                startActivityForResult(intent, NEW_TIMER_ACTIVITY_REQUEST_CODE);
+        SpeedDialView mainSpeedDial = findViewById(R.id.mainSD);
+        mainSpeedDial.addActionItem(new SpeedDialActionItem
+                .Builder(R.id.fab_add_alarm, R.drawable.ic_alarm_24)
+                .setLabel("알람")
+                .setFabBackgroundColor(ContextCompat.getColor(getApplicationContext(),R.color.teal_700))
+                .create());
+        mainSpeedDial.addActionItem(new SpeedDialActionItem
+                .Builder(R.id.fab_add_timer, R.drawable.ic_timer_24)
+                .setLabel("타이머")
+                .setFabBackgroundColor(ContextCompat.getColor(getApplicationContext(),R.color.teal_700))
+                .create());
+        mainSpeedDial.addActionItem(new SpeedDialActionItem
+                .Builder(R.id.fab_add_timetable, R.drawable.ic_timetable_24)
+                .setLabel("시간표")
+                .setFabBackgroundColor(ContextCompat.getColor(getApplicationContext(),R.color.teal_700))
+                .create());
+        mainSpeedDial.addActionItem(new SpeedDialActionItem
+                .Builder(R.id.fab_add_metro, R.drawable.ic_baseline_directions_subway_24)
+                .setLabel("지하철")
+                .setFabBackgroundColor(ContextCompat.getColor(getApplicationContext(),R.color.teal_700))
+                .create());
+
+        mainSpeedDial.setOnActionSelectedListener(new SpeedDialView.OnActionSelectedListener() {
+            @Override
+            public boolean onActionSelected(SpeedDialActionItem actionItem) {
+                switch (actionItem.getId()) {
+                    case R.id.fab_add_alarm: {
+                        Intent intent = new Intent(MainActivity.this, AlarmActivity.class);
+                        startActivityForResult(intent, NEW_ALARM_ACTIVITY_REQUEST_CODE);
+                        //Intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
+                        //startActivity(intent);
+                        break;
+                    }
+
+                    case R.id.fab_add_timer: {
+                        Intent intent = new Intent(MainActivity.this, TimerActivity.class);
+                        startActivityForResult(intent, NEW_TIMER_ACTIVITY_REQUEST_CODE);
+                        break;
+                    }
+                }
+                return true;
             }
         });
     }
