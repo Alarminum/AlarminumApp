@@ -1,2 +1,5 @@
 rootProject.name = "AlarminumApp"
 include ':app'
+include ':yhtest'
+include ':shtest'
+include ':jhtest'
