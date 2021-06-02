@@ -25,14 +25,15 @@ public class MainActivity extends AppCompatActivity {
         Button btn_refresh = (Button)findViewById(R.id.btn_refresh);
 
         adspin1 = ArrayAdapter.createFromResource(this, R.array.spinner_do, android.R.layout.simple_spinner_dropdown_item);
-        adspin1.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        adspin1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spin1.setAdapter(adspin1);
 
 
         spin1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int i, long l) {
-                if(adspin1.getItem(i).equals("서울")){
-                    choice_do = "서울";
+                if(adspin1.getItem(i).equals("1호선")){
+                    choice_do = "1호선";
                     adspin2 = ArrayAdapter.createFromResource(MainActivity.this, R.array.spinner_do_seoul, android.R.layout.simple_spinner_dropdown_item);
 
                     adspin2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -47,8 +48,8 @@ public class MainActivity extends AppCompatActivity {
                         public void onNothingSelected(AdapterView<?> parent) {
                         }
                     });
-                }else if (adspin1.getItem(i).equals("인천")){
-                    choice_do = "인천";
+                } else if (adspin1.getItem(i).equals("2호선")){
+                    choice_do = "2호선";
                     adspin2 = ArrayAdapter.createFromResource(MainActivity.this, R.array.spinner_do_incheon, android.R.layout.simple_spinner_dropdown_item);
 
                     adspin2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -72,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
         btn_refresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
