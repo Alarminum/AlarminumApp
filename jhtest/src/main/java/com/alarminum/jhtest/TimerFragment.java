@@ -12,12 +12,12 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.alarminum.jhtest.viewmodel.AlarmViewModel;
+import com.alarminum.jhtest.viewmodel.TimerListViewModel;
 
 
 public class TimerFragment extends Fragment {
     private RecyclerView recyclerView;
-    private AlarmViewModel alarmViewModel;
+    private TimerListViewModel timerViewModel;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -35,12 +35,16 @@ public class TimerFragment extends Fragment {
                 LinearLayoutManager(view.getContext()));
         recyclerView.setAdapter(adapter);
 
-        alarmViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(getActivity().getApplication())).get(AlarmViewModel.class);
+        timerViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(getActivity().getApplication())).get(TimerListViewModel.class);
 
-        alarmViewModel.getAllTimers().observe(getViewLifecycleOwner(), timerEntities -> {
+        timerViewModel.getAllTimers().observe(getViewLifecycleOwner(), timerEntities -> {
             adapter.submitList(timerEntities);
         });
 
         return view;
+    }
+
+    public TimerListViewModel getViewModel() {
+        return timerViewModel;
     }
 }

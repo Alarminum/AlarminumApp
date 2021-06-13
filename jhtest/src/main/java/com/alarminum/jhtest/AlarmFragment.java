@@ -12,12 +12,12 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.alarminum.jhtest.viewmodel.AlarmViewModel;
+import com.alarminum.jhtest.viewmodel.AlarmListViewModel;
 
 
 public class AlarmFragment extends Fragment {
     private RecyclerView recyclerView;
-    private AlarmViewModel alarmViewModel;
+    private AlarmListViewModel alarmListViewModel;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -35,9 +35,9 @@ public class AlarmFragment extends Fragment {
                 LinearLayoutManager(view.getContext()));
         recyclerView.setAdapter(adapter);
 
-        alarmViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(getActivity().getApplication())).get(AlarmViewModel.class);
+        alarmListViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(getActivity().getApplication())).get(AlarmListViewModel.class);
 
-        alarmViewModel.getAllAlarms().observe(getViewLifecycleOwner(), alarmEntities -> {
+        alarmListViewModel.getAllAlarms().observe(getViewLifecycleOwner(), alarmEntities -> {
             adapter.submitList(alarmEntities);
         });
 
@@ -45,7 +45,7 @@ public class AlarmFragment extends Fragment {
         return view;
     }
 
-    public AlarmViewModel getViewModel() {
-        return alarmViewModel;
+    public AlarmListViewModel getViewModel() {
+        return alarmListViewModel;
     }
 }

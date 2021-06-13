@@ -8,43 +8,26 @@ import androidx.lifecycle.LiveData;
 import com.alarminum.jhtest.database.AlarmDao;
 import com.alarminum.jhtest.database.AlarmDatabase;
 import com.alarminum.jhtest.database.AlarmEntity;
-import com.alarminum.jhtest.database.TimerDao;
-import com.alarminum.jhtest.database.TimerEntity;
+import com.alarminum.jhtest.utils.AppExecutors;
 
 import java.util.List;
 
 public class AlarmRepository {
     private AlarmDao alarmDao;
-    private TimerDao timerDao;
-    private LiveData<List<AlarmEntity>> allAlarms;
-    private LiveData<List<TimerEntity>> allTimers;
 
     public AlarmRepository(Application application) {
         AlarmDatabase db = AlarmDatabase.getInstance(application);
         alarmDao = db.alarmDao();
-        timerDao = db.timerDao();
-        allAlarms = alarmDao.getAllAlarms();
-        allTimers = timerDao.getAllTimers();
     }
 
     public void insert(AlarmEntity alarm) {
-        AlarmDatabase.dbWriteExecutor.execute(() -> {
+        AppExecutors.getInstance().getDiskIO().execute(() -> {
             alarmDao.insert(alarm);
         });
     }
 
-    public void insert(TimerEntity timer) {
-        AlarmDatabase.dbWriteExecutor.execute(() -> {
-            timerDao.insert(timer);
-        });
-    }
-
     public LiveData<List<AlarmEntity>> getAllAlarms() {
-        return allAlarms;
-    }
-
-    public LiveData<List<TimerEntity>> getAllTimers() {
-        return allTimers;
+        return alarmDao.getAllAlarms();
     }
 
 }

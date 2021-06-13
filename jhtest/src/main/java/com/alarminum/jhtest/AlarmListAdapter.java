@@ -9,19 +9,19 @@ import androidx.recyclerview.widget.ListAdapter;
 import com.alarminum.jhtest.database.AlarmEntity;
 
 
-public class AlarmListAdapter extends ListAdapter<AlarmEntity, AlarmViewHolder> {
+public class AlarmListAdapter extends ListAdapter<AlarmEntity, AlarmItemViewHolder> {
     public AlarmListAdapter(@NonNull DiffUtil.ItemCallback<AlarmEntity> diffCallback) {
         super(diffCallback);
     }
 
     @NonNull
     @Override
-    public AlarmViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return AlarmViewHolder.create(parent);
+    public AlarmItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return AlarmItemViewHolder.create(parent);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AlarmViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull AlarmItemViewHolder holder, int position) {
         AlarmEntity current = getItem(position);
         holder.bind(current);
     }

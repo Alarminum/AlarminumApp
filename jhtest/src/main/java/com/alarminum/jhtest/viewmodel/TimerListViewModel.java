@@ -6,24 +6,21 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.alarminum.jhtest.database.TimerEntity;
-import com.alarminum.jhtest.repository.AlarmRepository;
+import com.alarminum.jhtest.repository.TimerRepository;
 
 import java.util.List;
 
 public class TimerListViewModel extends AndroidViewModel {
-    private final AlarmRepository alarmRepo;
-
-    private final LiveData<List<TimerEntity>> allTimers;
+    private final TimerRepository timerRepo;
 
     public TimerListViewModel (Application application) {
         super(application);
-        alarmRepo = new AlarmRepository(application);
-        allTimers = alarmRepo.getAllTimers();
+        timerRepo = new TimerRepository(application);
     }
 
-    public LiveData<List<TimerEntity>> getAllTimers() { return allTimers; }
+    public LiveData<List<TimerEntity>> getAllTimers() { return timerRepo.getAllTimers(); }
 
     public void insert(TimerEntity timer) {
-        alarmRepo.insert(timer);
+        timerRepo.insert(timer);
     }
 }

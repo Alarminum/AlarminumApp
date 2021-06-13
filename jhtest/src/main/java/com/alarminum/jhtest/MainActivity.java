@@ -15,12 +15,12 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.alarminum.jhtest.database.AlarmEntity;
 import com.alarminum.jhtest.database.TimerEntity;
-import com.alarminum.jhtest.viewmodel.AlarmViewModel;
+import com.alarminum.jhtest.viewmodel.AlarmListViewModel;
 import com.leinardi.android.speeddial.SpeedDialActionItem;
 import com.leinardi.android.speeddial.SpeedDialView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    private AlarmViewModel alarmViewModel;
+    private AlarmListViewModel alarmListViewModel;
     FragmentManager fragmentManager;
     FragmentTransaction ft;
 
@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 alarmFragment.getViewModel().insert(alarmEntity);
             } else if(requestCode == NEW_TIMER_ACTIVITY_REQUEST_CODE) {
                 TimerEntity timerEntity = (TimerEntity) data.getSerializableExtra(TimerActivity.EXTRA_REPLY);
-                alarmFragment.getViewModel().insert(timerEntity);
+                timerFragment.getViewModel().insert(timerEntity);
             }
 
             Toast.makeText(

@@ -10,11 +10,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.alarminum.jhtest.database.TimerEntity;
 
 
-public class TimerViewHolder extends RecyclerView.ViewHolder {
+public class TimerItemViewHolder extends RecyclerView.ViewHolder {
     private final TextView timerTitleView;
     private final TextView timerTimeView;
 
-    private TimerViewHolder(View itemView) {
+    private TimerItemViewHolder(View itemView) {
         super(itemView);
         timerTitleView = itemView.findViewById(R.id.timer_title);
         timerTimeView = itemView.findViewById(R.id.timer_time);
@@ -25,9 +25,9 @@ public class TimerViewHolder extends RecyclerView.ViewHolder {
         timerTimeView.setText(String.format("%02d:%02d:%02d", timer.hour, timer.minute,timer.second));
     }
 
-    static TimerViewHolder create(ViewGroup parent) {
+    static TimerItemViewHolder create(ViewGroup parent) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.timer_item, parent, false);
-        return new TimerViewHolder(view);
+        return new TimerItemViewHolder(view);
     }
 }
