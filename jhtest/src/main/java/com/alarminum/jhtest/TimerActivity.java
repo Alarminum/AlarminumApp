@@ -19,7 +19,6 @@ import com.alarminum.jhtest.database.TimerEntity;
      private EditText aMinuteEditText;
      private EditText aSecondEditText;
      private CheckBox aDisposableCheckbox;
-     private EditText aRepeatTimeEditText;
      private CheckBox aVibCheckbox;
      private EditText aRingtoneEditText;
      private EditText aGroupNameEditText;
@@ -39,7 +38,6 @@ import com.alarminum.jhtest.database.TimerEntity;
          aSecondEditText =  findViewById(R.id.timer_second_edit);
          aDisposableCheckbox = findViewById(R.id.timer_disposable_check);
 
-         aRepeatTimeEditText = findViewById(R.id.timer_repeat_time_edit);
          aVibCheckbox = findViewById(R.id.timer_vib_check);
          aRingtoneEditText = findViewById(R.id.timer_ringtone_edit);
          aGroupNameEditText = findViewById(R.id.timer_group_edit);
@@ -55,11 +53,10 @@ import com.alarminum.jhtest.database.TimerEntity;
                  int second = Integer.parseInt(aSecondEditText.getText().toString());
 
                  int isDisposable = aDisposableCheckbox.isChecked() ? 1: 0;
-                 int repeatTime = Integer.parseInt(aRepeatTimeEditText.getText().toString());
                  int willVibe = aVibCheckbox.isChecked() ? 1: 0;
                  String ringtone = aRingtoneEditText.getText().toString();
                  String groupName = aGroupNameEditText.getText().toString();
-                 newTimer = new TimerEntity(title, hour, minute, second, repeatTime, willVibe, ringtone, isDisposable, 1, 0);
+                 newTimer = new TimerEntity(title, hour, minute, second, willVibe, ringtone, isDisposable, 1, 1);
 
                  replyIntent.putExtra(EXTRA_REPLY, newTimer);
                  setResult(RESULT_OK, replyIntent);

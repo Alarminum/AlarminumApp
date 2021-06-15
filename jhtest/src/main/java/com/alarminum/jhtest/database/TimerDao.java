@@ -14,6 +14,9 @@ public interface TimerDao {
     @Query("SELECT * FROM timers")
     LiveData<List<TimerEntity>> getAllTimers();
 
+    @Query("SELECT * FROM timers WHERE :gid")
+    LiveData<List<TimerEntity>> getTimersOfGroup(int gid);
+
     @Insert
     void insert(TimerEntity timer);
 

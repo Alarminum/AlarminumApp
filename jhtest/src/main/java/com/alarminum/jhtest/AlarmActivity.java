@@ -25,7 +25,6 @@ public class AlarmActivity extends AppCompatActivity {
     private CheckBox aFriCheckbox;
     private CheckBox aSatCheckbox;
     private CheckBox aSunCheckbox;
-    private EditText aRepeatTimeEditText;
     private CheckBox aVibCheckbox;
     private EditText aRingtoneEditText;
     private EditText aGroupNameEditText;
@@ -50,7 +49,6 @@ public class AlarmActivity extends AppCompatActivity {
         aFriCheckbox = findViewById(R.id.friday_check);
         aSatCheckbox = findViewById(R.id.saturday_check);
         aSunCheckbox = findViewById(R.id.sunday_check);
-        aRepeatTimeEditText = findViewById(R.id.repeat_time_edit);
         aVibCheckbox = findViewById(R.id.vib_check);
         aRingtoneEditText = findViewById(R.id.ringtone_edit);
         aGroupNameEditText = findViewById(R.id.alarm_group_edit);
@@ -79,11 +77,10 @@ public class AlarmActivity extends AppCompatActivity {
                 weekdayList[4] = containFriday;
                 weekdayList[5] = containSaturday;
                 weekdayList[6] = containSunday;
-                int repeatTime = Integer.parseInt(aRepeatTimeEditText.getText().toString());
                 int willVibe = aVibCheckbox.isChecked() ? 1: 0;
                 String ringtone = aRingtoneEditText.getText().toString();
                 String groupName = aGroupNameEditText.getText().toString();
-                newAlarm = new AlarmEntity(title, hour, minute, weekdayList, repeatTime, willVibe, ringtone, isDisposable, 1, 0);
+                newAlarm = new AlarmEntity(title, hour, minute, weekdayList, willVibe, ringtone, isDisposable, 1, 1);
 
                 replyIntent.putExtra(EXTRA_REPLY, newAlarm);
                 setResult(RESULT_OK, replyIntent);

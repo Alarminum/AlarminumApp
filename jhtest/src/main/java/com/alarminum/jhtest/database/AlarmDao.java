@@ -14,6 +14,9 @@ public interface AlarmDao {
     @Query("SELECT * FROM alarms")
     LiveData<List<AlarmEntity>> getAllAlarms();
 
+    @Query("SELECT * FROM alarms WHERE :gid")
+    LiveData<List<AlarmEntity>> getAlarmOfGroup(int gid);
+
     @Insert
     void insert(AlarmEntity alarm);
 

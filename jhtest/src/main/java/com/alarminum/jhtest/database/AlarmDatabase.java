@@ -9,10 +9,12 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import com.alarminum.jhtest.utils.AppExecutors;
+
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {AlarmEntity.class, TimerEntity.class}, version = 1, exportSchema = false)
+@Database(entities = {AlarmEntity.class, TimerEntity.class, AlarmGroup.class}, version = 1, exportSchema = false)
 @TypeConverters({Converters.class})
 public abstract class AlarmDatabase extends RoomDatabase {
     // Apply singleton pattern(Lazy holder)
@@ -20,6 +22,7 @@ public abstract class AlarmDatabase extends RoomDatabase {
     private static Context appContext;
     public abstract AlarmDao alarmDao();
     public abstract TimerDao timerDao();
+    public abstract AlarmGroupDao groupDao();
 
     // Get application context when initialize DB
     // At this time, inner class(DBHolder) is not initialized.
@@ -47,9 +50,16 @@ public abstract class AlarmDatabase extends RoomDatabase {
         public void onCreate(@NonNull SupportSQLiteDatabase db) {
             super.onCreate(db);
 
-            dbWriteExecutor.execute(()->{
-                AlarmDao dao = DBHolder.INSTANCE.alarmDao();
-                dao.deleteAll();
+            AppExecutors.getInstance().getDiskIO().execute(() -> {
+                AlarmGroupDao groupDao = DBHolder.INSTANCE.groupDao();
+                groupDao.insert(new AlarmGroup(
+                        1,
+                        "기본 알람",
+                        0,
+                        null,
+                        0,
+                        1
+                ));
             });
         }
     };
