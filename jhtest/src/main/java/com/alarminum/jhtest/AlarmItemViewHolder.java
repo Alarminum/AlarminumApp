@@ -1,5 +1,6 @@
 package com.alarminum.jhtest;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,9 +23,12 @@ public class AlarmItemViewHolder extends RecyclerView.ViewHolder {
         alarmTimeView = itemView.findViewById(R.id.alarm_time);
     }
 
-    public void bind(AlarmEntity alarm) {
+    public void bind(AlarmEntity alarm, Boolean isSelected) {
         alarmTitleView.setText(alarm.label);
         alarmTimeView.setText(String.format("%02d:%02d", alarm.hour, alarm.minute));
+        this.itemView.setAlpha((float) (isSelected ? 0.5 : 1.0));
+        Log.d("rcViewSel", "is Selected? " + (isSelected ? "true" : "false") + ", aid: " + alarm.aid + ", position: " + getAdapterPosition());
+
     }
 
     static AlarmItemViewHolder create(ViewGroup parent) {

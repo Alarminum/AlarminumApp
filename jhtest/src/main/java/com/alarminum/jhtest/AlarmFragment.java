@@ -9,14 +9,20 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.selection.SelectionTracker;
+import androidx.recyclerview.selection.StableIdKeyProvider;
+import androidx.recyclerview.selection.StorageStrategy;
+import androidx.recyclerview.selection.SelectionPredicates;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.alarminum.jhtest.view.AlarmDetailsLookup;
 import com.alarminum.jhtest.viewmodel.AlarmListViewModel;
 
 
 public class AlarmFragment extends Fragment {
     private RecyclerView recyclerView;
+    private SelectionTracker<Long> selectionTracker;
     private AlarmListViewModel alarmListViewModel;
 
     @Override
@@ -35,17 +41,33 @@ public class AlarmFragment extends Fragment {
                 LinearLayoutManager(view.getContext()));
         recyclerView.setAdapter(adapter);
 
+
         alarmListViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(getActivity().getApplication())).get(AlarmListViewModel.class);
 
         alarmListViewModel.getAllAlarms().observe(getViewLifecycleOwner(), alarmEntities -> {
             adapter.submitList(alarmEntities);
         });
 
+        setupSelectionTracker();
+        adapter.setSelectionTracker(this.selectionTracker);
 
         return view;
+    }
+
+    private void setupSelectionTracker() {
+        selectionTracker = new SelectionTracker.Builder<>(
+                "alarm_id",
+                recyclerView,
+                new StableIdKeyProvider(recyclerView),
+                new AlarmDetailsLookup(recyclerView),
+                StorageStrategy.createLongStorage())
+                .withSelectionPredicate(SelectionPredicates.createSelectAnything())
+                .build();
     }
 
     public AlarmListViewModel getViewModel() {
         return alarmListViewModel;
     }
+
+
 }

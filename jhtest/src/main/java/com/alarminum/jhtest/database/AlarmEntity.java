@@ -21,7 +21,7 @@ import java.util.Arrays;
 public class AlarmEntity implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
-    public int aid = 1;             // 알람의 id. 기본키이며 1씩 자동적으로 증가함.
+    public int aid = 0;             // 알람의 id. 기본키이며 1씩 자동적으로 증가함.
 
     public String label;            // 알람의 제목
 

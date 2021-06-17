@@ -22,6 +22,7 @@ public class AlarmDetailsLookup extends ItemDetailsLookup<Long> {
         View view = recyclerView.findChildViewUnder(e.getX(), e.getY());
         if(view != null) {
             AlarmItemViewHolder viewHolder = (AlarmItemViewHolder) recyclerView.getChildViewHolder(view);
+            return viewHolder.getItemDetails();
         }
 
         return null;
