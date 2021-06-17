@@ -5,6 +5,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+import androidx.recyclerview.selection.ItemDetailsLookup;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alarminum.jhtest.database.AlarmEntity;
@@ -29,5 +31,20 @@ public class AlarmItemViewHolder extends RecyclerView.ViewHolder {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.recyclerview_item, parent, false);
         return new AlarmItemViewHolder(view);
+    }
+
+    public ItemDetailsLookup.ItemDetails<Long> getItemDetails() {
+        return new ItemDetailsLookup.ItemDetails<Long>() {
+            @Override
+            public int getPosition() {
+                return getAdapterPosition();
+            }
+
+            @Nullable
+            @Override
+            public Long getSelectionKey() {
+                return getItemId();
+            }
+        };
     }
 }

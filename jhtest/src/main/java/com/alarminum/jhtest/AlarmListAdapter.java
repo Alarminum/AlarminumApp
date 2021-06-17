@@ -12,6 +12,12 @@ import com.alarminum.jhtest.database.AlarmEntity;
 public class AlarmListAdapter extends ListAdapter<AlarmEntity, AlarmItemViewHolder> {
     public AlarmListAdapter(@NonNull DiffUtil.ItemCallback<AlarmEntity> diffCallback) {
         super(diffCallback);
+        setHasStableIds(true);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
     }
 
     @NonNull
