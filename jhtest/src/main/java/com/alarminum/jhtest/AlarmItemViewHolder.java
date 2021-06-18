@@ -14,6 +14,7 @@ import com.alarminum.jhtest.database.AlarmEntity;
 
 
 public class AlarmItemViewHolder extends RecyclerView.ViewHolder {
+    private AlarmEntity alarm;
     private final TextView alarmTitleView;
     private final TextView alarmTimeView;
 
@@ -24,17 +25,21 @@ public class AlarmItemViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bind(AlarmEntity alarm, Boolean isSelected) {
+        this.alarm = alarm;
         alarmTitleView.setText(alarm.label);
         alarmTimeView.setText(String.format("%02d:%02d", alarm.hour, alarm.minute));
         this.itemView.setAlpha((float) (isSelected ? 0.5 : 1.0));
         Log.d("rcViewSel", "is Selected? " + (isSelected ? "true" : "false") + ", aid: " + alarm.aid + ", position: " + getAdapterPosition());
-
     }
 
     static AlarmItemViewHolder create(ViewGroup parent) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.recyclerview_item, parent, false);
         return new AlarmItemViewHolder(view);
+    }
+
+    public final AlarmEntity getElement() {
+        return alarm;
     }
 
     public ItemDetailsLookup.ItemDetails<Long> getItemDetails() {

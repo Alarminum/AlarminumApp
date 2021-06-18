@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+import androidx.appcompat.widget.Toolbar;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -35,6 +36,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Toolbar mainToolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(mainToolbar);
 
         fragmentManager = getSupportFragmentManager();
 
@@ -81,12 +85,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     startActivityForResult(intent, NEW_ALARM_ACTIVITY_REQUEST_CODE);
                     //Intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
                     //startActivity(intent);
-                    break;
                 }
-
                 case R.id.fab_add_timer: {
                     Intent intent = new Intent(MainActivity.this, TimerActivity.class);
                     startActivityForResult(intent, NEW_TIMER_ACTIVITY_REQUEST_CODE);
+                }
+                default: {
+                    mainSpeedDial.close();
                     break;
                 }
             }

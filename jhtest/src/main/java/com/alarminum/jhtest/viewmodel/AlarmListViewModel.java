@@ -24,4 +24,6 @@ public class AlarmListViewModel extends AndroidViewModel {
     public void insert(AlarmEntity alarm) {
         alarmRepo.insert(alarm);
     }
+
+    public void delete(AlarmEntity alarm) { alarmRepo.delete(alarm);}
 }

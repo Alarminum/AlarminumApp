@@ -30,4 +30,10 @@ public class AlarmRepository {
         return alarmDao.getAllAlarms();
     }
 
+    public void delete(AlarmEntity alarm) {
+        AppExecutors.getInstance().getDiskIO().execute(() -> {
+            alarmDao.delete(alarm);
+        });
+    }
+
 }
