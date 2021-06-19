@@ -13,7 +13,7 @@ import com.alarminum.jhtest.database.AlarmEntity;
 
 public class AlarmListAdapter extends ListAdapter<AlarmEntity, AlarmItemViewHolder> {
     private SelectionTracker<Long> selectionTracker;
-    private int expandedItemPosition = -1;
+    public int expandedItemPosition = -1;
 
     public AlarmListAdapter(@NonNull DiffUtil.ItemCallback<AlarmEntity> diffCallback) {
         super(diffCallback);
@@ -57,12 +57,7 @@ public class AlarmListAdapter extends ListAdapter<AlarmEntity, AlarmItemViewHold
                 }
             });
 
-            holder.itemView.setOnLongClickListener(v->{
-                expandedItemPosition = -1;
-                return true;
-            });
-
-            holder.alarmTimeView.setVisibility((position == expandedItemPosition) ? View.VISIBLE : View.GONE);
+            holder.alarmTitleView.setVisibility((position == expandedItemPosition) ? View.VISIBLE : View.GONE);
         }
     }
 

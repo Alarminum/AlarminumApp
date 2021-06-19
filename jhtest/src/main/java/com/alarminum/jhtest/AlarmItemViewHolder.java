@@ -27,8 +27,8 @@ public class AlarmItemViewHolder extends RecyclerView.ViewHolder {
 
     public void bind(AlarmEntity alarm) {
         this.alarm = alarm;
-        alarmTitleView.setText(alarm.label);
         alarmTimeView.setText(String.format("%02d:%02d", alarm.hour, alarm.minute));
+        alarmTitleView.setText(alarm.label);
     }
 
     static AlarmItemViewHolder create(ViewGroup parent) {

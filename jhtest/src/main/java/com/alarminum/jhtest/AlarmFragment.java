@@ -55,8 +55,7 @@ public class AlarmFragment extends Fragment {
 
         recyclerView = view.findViewById(R.id.recyclerview);
         adapter = new AlarmListAdapter(new AlarmListAdapter.AlarmDiff());
-        recyclerView.setLayoutManager(new
-                LinearLayoutManager(view.getContext()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         recyclerView.setAdapter(adapter);
 
         setupSelectionTracker();
@@ -92,7 +91,9 @@ public class AlarmFragment extends Fragment {
             public void onSelectionChanged() {
                 super.onSelectionChanged();
                 if(selectionTracker.hasSelection() && (mainMenu.findItem(MENU_DELETE) == null)) {
-                    mainMenu.add(Menu.NONE, MENU_DELETE, Menu.NONE, "Delete")
+                    adapter.expandedItemPosition = -1;
+                    mainMenu
+                        .add(Menu.NONE, MENU_DELETE, Menu.NONE, "Delete")
                         .setIcon(R.drawable.ic_baseline_delete_24)
                         .setOnMenuItemClickListener(item -> {
                             selectionTracker.getSelection().forEach((it)-> {
