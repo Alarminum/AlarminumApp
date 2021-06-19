@@ -8,7 +8,6 @@ import androidx.room.PrimaryKey;
 import androidx.room.Transaction;
 
 import java.io.Serializable;
-import java.security.cert.TrustAnchor;
 
 @Entity(
         tableName = "timers",
@@ -22,7 +21,7 @@ import java.security.cert.TrustAnchor;
 public class TimerEntity implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
-    public int tid = 1;             // 타이머의 id. 기본키이며 1씩 자동적으로 증가함.
+    public int tid = 0;             // 타이머의 id. 기본키이며 1씩 자동적으로 증가함.
 
     public String label;            // 타이머의 제목
 

@@ -57,11 +57,11 @@ public class AddAlarmDialog extends DialogFragment {
                 );
                 addAlarmViewModel.insert(newAlarm);
             }
-            dismiss();
+            dismissAllowingStateLoss();
         });
 
         binding.cancelBtn.setOnClickListener(v -> {
-            dismiss();
+            dismissAllowingStateLoss();
         });
 
         return binding.getRoot();

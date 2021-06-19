@@ -2,8 +2,7 @@ package com.alarminum.jhtest;
 
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
+
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -26,7 +25,7 @@ import com.alarminum.jhtest.viewmodel.GroupListViewModel;
 import com.leinardi.android.speeddial.SpeedDialActionItem;
 import com.leinardi.android.speeddial.SpeedDialView;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity {
     FragmentManager fragmentManager;
     FragmentTransaction ft;
     AlarmFragment alarmFragment;
@@ -65,9 +64,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         fragmentManager = getSupportFragmentManager();
 
-        Button alarmPageButton = findViewById(R.id.alarm_page_btn);
-        Button timerPageButton = findViewById(R.id.timer_page_btn);
-
         alarmFragment = new AlarmFragment();
         timerFragment = new TimerFragment();
 
@@ -75,9 +71,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ft.add(R.id.fragment_container, alarmFragment);
         ft.addToBackStack(null);
         ft.commit();
-
-        alarmPageButton.setOnClickListener(this);
-        timerPageButton.setOnClickListener(this);
 
         SpeedDialView mainSpeedDial = findViewById(R.id.mainSD);
         mainSpeedDial.addActionItem(new SpeedDialActionItem
@@ -105,10 +98,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             switch (actionItem.getId()) {
                 case R.id.fab_add_alarm: {
                     addAlarmDialog.show(fragmentManager, "add_alarm_dialog");
-//                    Intent intent = new Intent(MainActivity.this, AlarmActivity.class);
-//                    startActivityForResult(intent, NEW_ALARM_ACTIVITY_REQUEST_CODE);
-                    //Intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
-                    //startActivity(intent);
                     mainSpeedDial.close();
                     break;
                 }
@@ -126,23 +115,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
     }
 
-
-    @Override
-    public void onClick(View v) {
-        ft = fragmentManager.beginTransaction();
-
-        int id = v.getId();
-        switch (id) {
-            case R.id.alarm_page_btn:
-//                ft.replace(R.id.fragment_container, alarmFragment);
-//                ft.commit();
-                break;
-            case R.id.timer_page_btn:
-                ft.replace(R.id.fragment_container, timerFragment);
-                ft.commit();
-                break;
-        }
-    }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {

@@ -33,10 +33,6 @@ public class GroupListAdapter extends ListAdapter<AlarmGroup, GroupViewHolder> {
         timerFragment = new TimerFragment();
         fragmentManager = activity.getSupportFragmentManager();
 
-        ft = fragmentManager.beginTransaction();
-        ft.add(R.id.fragment_container, timerFragment);
-        ft.addToBackStack(null);
-        ft.commit();
         return GroupViewHolder.create(parent);
     }
 
