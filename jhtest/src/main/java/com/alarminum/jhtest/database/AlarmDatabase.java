@@ -11,10 +11,9 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.alarminum.jhtest.utils.AppExecutors;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
-@Database(entities = {AlarmEntity.class, TimerEntity.class, AlarmGroup.class}, version = 1, exportSchema = false)
+
+@Database(entities = {AlarmEntity.class, TimerEntity.class, AlarmGroup.class, StationEntity.class}, version = 1, exportSchema = false)
 @TypeConverters({Converters.class})
 public abstract class AlarmDatabase extends RoomDatabase {
     // Apply singleton pattern(Lazy holder)
