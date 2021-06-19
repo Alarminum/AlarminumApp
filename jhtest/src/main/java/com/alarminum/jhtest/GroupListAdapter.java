@@ -1,26 +1,42 @@
 package com.alarminum.jhtest;
 
+import android.content.Context;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.alarminum.jhtest.database.AlarmEntity;
 import com.alarminum.jhtest.database.AlarmGroup;
 
-import java.util.List;
 
 public class GroupListAdapter extends ListAdapter<AlarmGroup, GroupViewHolder> {
-    public GroupListAdapter(DiffUtil.ItemCallback<AlarmGroup> diffCallback) {
+    private FragmentManager fragmentManager;
+    private FragmentTransaction ft;
+    private final AppCompatActivity activity;
+    AlarmFragment alarmFragment;
+    TimerFragment timerFragment;
+
+    public GroupListAdapter( Context context, DiffUtil.ItemCallback<AlarmGroup> diffCallback) {
         super(diffCallback);
+        this.activity = (AppCompatActivity) context;
         setHasStableIds(true);
     }
 
     @NonNull
     @Override
     public GroupViewHolder onCreateViewHolder(@NonNull  ViewGroup parent, int viewType) {
+        alarmFragment = new AlarmFragment();
+        timerFragment = new TimerFragment();
+        fragmentManager = activity.getSupportFragmentManager();
+
+        ft = fragmentManager.beginTransaction();
+        ft.add(R.id.fragment_container, timerFragment);
+        ft.addToBackStack(null);
+        ft.commit();
         return GroupViewHolder.create(parent);
     }
 
@@ -28,6 +44,21 @@ public class GroupListAdapter extends ListAdapter<AlarmGroup, GroupViewHolder> {
     public void onBindViewHolder(@NonNull GroupViewHolder holder, int position) {
         AlarmGroup current = getItem(position);
         holder.bind(current);
+        holder.itemView.setOnClickListener(v->{
+            ft = fragmentManager.beginTransaction();
+
+            int id = current.groupType;
+            switch (id) {
+                case 0:
+                    ft.replace(R.id.fragment_container, alarmFragment);
+                    ft.commit();
+                    break;
+                case 1:
+                    ft.replace(R.id.fragment_container, timerFragment);
+                    ft.commit();
+                    break;
+            }
+        });
     }
 
     static class GroupDiff extends DiffUtil.ItemCallback<AlarmGroup> {

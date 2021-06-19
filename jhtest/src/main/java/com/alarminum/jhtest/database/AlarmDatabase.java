@@ -53,12 +53,13 @@ public abstract class AlarmDatabase extends RoomDatabase {
                 Integer[] weekdays = new Integer[] {1,1,1,1,0,1,1};
                 groupDao.insert(new AlarmGroup(1, "기본 알람 그룹", 0, 0,null, 0, 1));
                 groupDao.insert(new AlarmGroup(2, "기본 타이머 그룹", 1, 0,null, 0, 1));
-                alarmDao.insert((new AlarmEntity("test1",12,30, weekdays,1,null,0,1,1)));
-                alarmDao.insert((new AlarmEntity("test2",12,30, weekdays,1,null,0,1,1)));
-                alarmDao.insert((new AlarmEntity("test3",12,30, weekdays,1,null,0,1,1)));
-                alarmDao.insert((new AlarmEntity("test4",12,30, weekdays,1,null,0,1,1)));
-                alarmDao.insert((new AlarmEntity("test5",12,30, weekdays,1,null,0,1,1)));
-                alarmDao.insert((new AlarmEntity("test6",12,30, weekdays,1,null,0,1,1)));
+                alarmDao.insert((new AlarmEntity("test1",12,30, weekdays,true,null,false,true,1)));
+                alarmDao.insert((new AlarmEntity("test2",12,30, weekdays,true,null,false,true,1)));
+                alarmDao.insert((new AlarmEntity("test3",12,30, weekdays,true,null,false,true,1)));
+                alarmDao.insert((new AlarmEntity("test4",12,30, weekdays,true,null,false,true,1)));
+                alarmDao.insert((new AlarmEntity("test5",12,30, weekdays,true,null,false,true,1)));
+                alarmDao.insert((new AlarmEntity("test6",12,30, weekdays,true,null,false,true,1)));
+
 
             });
         }
