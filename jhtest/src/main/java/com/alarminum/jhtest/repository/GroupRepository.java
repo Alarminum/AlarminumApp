@@ -29,4 +29,9 @@ public class GroupRepository  {
         return groupDao.getAllGroups();
     }
 
+    public void delete(AlarmGroup group) {
+        AppExecutors.getInstance().getDiskIO().execute(()->{
+            groupDao.delete(group);
+        });
+    }
 }

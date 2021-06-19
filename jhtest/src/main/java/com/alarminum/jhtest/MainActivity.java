@@ -19,11 +19,15 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.alarminum.jhtest.database.AlarmEntity;
 import com.alarminum.jhtest.database.TimerEntity;
 import com.alarminum.jhtest.viewmodel.AlarmListViewModel;
+import com.alarminum.jhtest.viewmodel.GroupListViewModel;
 import com.leinardi.android.speeddial.SpeedDialActionItem;
 import com.leinardi.android.speeddial.SpeedDialView;
 
@@ -35,6 +39,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     DrawerLayout mDrawerLayout;
     ActionBarDrawerToggle mDrawerToggle;
+
+    RecyclerView groupList;
+    GroupListAdapter adapter;
+    GroupListViewModel groupListViewModel;
 
     public static final int NEW_ALARM_ACTIVITY_REQUEST_CODE = 1;
     public static final int NEW_TIMER_ACTIVITY_REQUEST_CODE = 2;
@@ -48,10 +56,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Toolbar mainToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mainToolbar);
         mDrawerLayout = findViewById(R.id.drawer_layout);
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mainToolbar, R.string.drawer_open, R.string.drawer_close);
-        mDrawerLayout.addDrawerListener(mDrawerToggle);
-        mDrawerToggle.syncState();
 
+        groupList = findViewById(R.id.group_rcview);
+        adapter = new GroupListAdapter(new GroupListAdapter.GroupDiff());
+        groupList.setLayoutManager(new LinearLayoutManager(this));
+        groupList.setAdapter(adapter);
+
+        groupListViewModel = new ViewModelProvider(this,ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication())).get(GroupListViewModel.class);
+
+        groupListViewModel.getAllGroups().observe(this,adapter::submitList);
 
         fragmentManager = getSupportFragmentManager();
 
