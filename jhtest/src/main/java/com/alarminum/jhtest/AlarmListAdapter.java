@@ -1,6 +1,7 @@
 package com.alarminum.jhtest;
 
 import android.util.Log;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -39,10 +40,30 @@ public class AlarmListAdapter extends ListAdapter<AlarmEntity, AlarmItemViewHold
     public void onBindViewHolder(@NonNull AlarmItemViewHolder holder, int position) {
         AlarmEntity current = getItem(position);
         if(selectionTracker!=null) {
-            boolean isSelected = selectionTracker.isSelected((long) position);
             holder.bind(current);
+
+            boolean isSelected = selectionTracker.isSelected((long) position);
             holder.itemView.setAlpha((float) (isSelected ? 0.5 : 1.0));
-            Log.d("rcViewSel", "is Selected? " + (isSelected ? "true" : "false") + ", aid: " + current.aid + ", position: " + position);
+
+            holder.itemView.setOnClickListener(v->{
+                if(position == expandedItemPosition) {
+                    notifyItemChanged(position);
+                    expandedItemPosition = -1;
+                } else {
+                    if(expandedItemPosition != -1) {
+                        notifyItemChanged(expandedItemPosition);
+                    }
+                    expandedItemPosition = position;
+                    notifyItemChanged(position);
+                }
+            });
+
+            holder.itemView.setOnLongClickListener(v->{
+                expandedItemPosition = -1;
+                return true;
+            });
+
+            holder.alarmTimeView.setVisibility((position == expandedItemPosition) ? View.VISIBLE : View.GONE);
         }
     }
 

@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+
 import androidx.recyclerview.selection.ItemDetailsLookup;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -15,8 +16,8 @@ import com.alarminum.jhtest.database.AlarmEntity;
 
 public class AlarmItemViewHolder extends RecyclerView.ViewHolder {
     private AlarmEntity alarm;
-    private final TextView alarmTitleView;
-    private final TextView alarmTimeView;
+    public final TextView alarmTitleView;
+    public final TextView alarmTimeView;
 
     private AlarmItemViewHolder(View itemView) {
         super(itemView);
