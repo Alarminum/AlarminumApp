@@ -1,5 +1,6 @@
 package com.alarminum.jhtest.fragments;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -48,6 +49,9 @@ public class AddTimerDialog extends DialogFragment {
                         binding.timerDisposableCheck.isChecked(),
                         true, 1
                 );
+                Bundle result = new Bundle();
+                result.putInt("group",1);
+                getParentFragmentManager().setFragmentResult("add", result);
 
                 addTimerViewModel.insert(newTimer);
             }
@@ -59,6 +63,19 @@ public class AddTimerDialog extends DialogFragment {
         });
 
         return binding.getRoot();
+    }
+
+    @Override
+    public void onDismiss(@NonNull DialogInterface dialog) {
+        super.onDismiss(dialog);
+        binding.timerTitleEdit.setText("");
+        binding.timerHourEdit.setText("");
+        binding.timerMinuteEdit.setText("");
+        binding.timerSecondEdit.setText("");
+        binding.timerDisposableCheck.setChecked(false);
+        binding.timerVibCheck.setChecked(false);
+        binding.timerRingtoneEdit.setText("");
+        binding.timerGroupEdit.setText("");
     }
 
     @Override

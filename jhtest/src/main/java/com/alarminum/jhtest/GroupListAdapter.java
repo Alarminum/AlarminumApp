@@ -16,13 +16,14 @@ import com.alarminum.jhtest.database.AlarmGroup;
 public class GroupListAdapter extends ListAdapter<AlarmGroup, GroupViewHolder> {
     private FragmentManager fragmentManager;
     private FragmentTransaction ft;
-    private final AppCompatActivity activity;
+    private Context context;
+    //private final AppCompatActivity activity;
     AlarmFragment alarmFragment;
     TimerFragment timerFragment;
 
     public GroupListAdapter( Context context, DiffUtil.ItemCallback<AlarmGroup> diffCallback) {
         super(diffCallback);
-        this.activity = (AppCompatActivity) context;
+        this.context = context;
         setHasStableIds(true);
     }
 
@@ -31,7 +32,7 @@ public class GroupListAdapter extends ListAdapter<AlarmGroup, GroupViewHolder> {
     public GroupViewHolder onCreateViewHolder(@NonNull  ViewGroup parent, int viewType) {
         alarmFragment = new AlarmFragment();
         timerFragment = new TimerFragment();
-        fragmentManager = activity.getSupportFragmentManager();
+        fragmentManager = ((AppCompatActivity)context).getSupportFragmentManager();
 
         return GroupViewHolder.create(parent);
     }
@@ -42,7 +43,6 @@ public class GroupListAdapter extends ListAdapter<AlarmGroup, GroupViewHolder> {
         holder.bind(current);
         holder.itemView.setOnClickListener(v->{
             ft = fragmentManager.beginTransaction();
-
             int id = current.groupType;
             switch (id) {
                 case 0:
@@ -54,12 +54,13 @@ public class GroupListAdapter extends ListAdapter<AlarmGroup, GroupViewHolder> {
                     ft.commit();
                     break;
             }
+            ((MainActivity)context).closeDrawer();
         });
     }
 
     static class GroupDiff extends DiffUtil.ItemCallback<AlarmGroup> {
         @Override
-        public boolean areItemsTheSame(@NonNull  AlarmGroup oldItem, @NonNull  AlarmGroup newItem) {
+        public boolean areItemsTheSame(@NonNull AlarmGroup oldItem, @NonNull AlarmGroup newItem) {
             return oldItem == newItem;
         }
 

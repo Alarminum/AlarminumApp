@@ -13,6 +13,7 @@ import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentResultListener;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -21,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.alarminum.jhtest.fragments.AddAlarmDialog;
 import com.alarminum.jhtest.fragments.AddTimerDialog;
+import com.alarminum.jhtest.viewmodel.AddAlarmViewModel;
 import com.alarminum.jhtest.viewmodel.GroupListViewModel;
 import com.leinardi.android.speeddial.SpeedDialActionItem;
 import com.leinardi.android.speeddial.SpeedDialView;
@@ -35,7 +37,8 @@ public class MainActivity extends AppCompatActivity {
     AddTimerDialog addTimerDialog;
 
     DrawerLayout mDrawerLayout;
-    ActionBarDrawerToggle mDrawerToggle;
+
+    SpeedDialView mainSpeedDial;
 
     RecyclerView groupList;
     GroupListAdapter adapter;
@@ -45,9 +48,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        addAlarmDialog = new AddAlarmDialog();
-        addTimerDialog = new AddTimerDialog();
 
         Toolbar mainToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mainToolbar);
@@ -63,16 +63,26 @@ public class MainActivity extends AppCompatActivity {
         groupListViewModel.getAllGroups().observe(this,adapter::submitList);
 
         fragmentManager = getSupportFragmentManager();
+        fragmentManager.setFragmentResultListener("add", this, (requestKey, result) -> {
+            int groupID = result.getInt("group");
+            ft = fragmentManager.beginTransaction();
+            ft.replace(R.id.fragment_container, groupID==0 ? alarmFragment : timerFragment);
+            ft.addToBackStack(null);
+            ft.commit();
+        });
 
         alarmFragment = new AlarmFragment();
         timerFragment = new TimerFragment();
+
+        addAlarmDialog = new AddAlarmDialog();
+        addTimerDialog = new AddTimerDialog();
 
         ft = fragmentManager.beginTransaction();
         ft.add(R.id.fragment_container, alarmFragment);
         ft.addToBackStack(null);
         ft.commit();
 
-        SpeedDialView mainSpeedDial = findViewById(R.id.mainSD);
+        mainSpeedDial = findViewById(R.id.mainSD);
         mainSpeedDial.addActionItem(new SpeedDialActionItem
                 .Builder(R.id.fab_add_alarm, R.drawable.ic_alarm_24)
                 .setLabel("알람")
@@ -97,6 +107,7 @@ public class MainActivity extends AppCompatActivity {
         mainSpeedDial.setOnActionSelectedListener(actionItem -> {
             switch (actionItem.getId()) {
                 case R.id.fab_add_alarm: {
+
                     addAlarmDialog.show(fragmentManager, "add_alarm_dialog");
                     mainSpeedDial.close();
                     break;
@@ -115,12 +126,12 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:{
                 mDrawerLayout.openDrawer(GravityCompat.START);
+                mainSpeedDial.close();
                 return true;
             }
         }
@@ -134,5 +145,9 @@ public class MainActivity extends AppCompatActivity {
         } else {
             super.onBackPressed();
         }
+    }
+
+    public void closeDrawer() {
+        mDrawerLayout.closeDrawer(GravityCompat.START);
     }
 }

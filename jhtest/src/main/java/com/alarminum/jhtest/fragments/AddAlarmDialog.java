@@ -1,5 +1,6 @@
 package com.alarminum.jhtest.fragments;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -29,7 +30,7 @@ public class AddAlarmDialog extends DialogFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        addAlarmViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(getActivity().getApplication())).get(AddAlarmViewModel.class);
+        addAlarmViewModel = new ViewModelProvider(this).get(AddAlarmViewModel.class);
 
         binding = DialogAddAlarmBinding.inflate(inflater, container, false);
 
@@ -55,7 +56,11 @@ public class AddAlarmDialog extends DialogFragment {
                         binding.alarmDisposableCheck.isChecked(),
                         true, 1
                 );
+
                 addAlarmViewModel.insert(newAlarm);
+                Bundle result = new Bundle();
+                result.putInt("group",0);
+                getParentFragmentManager().setFragmentResult("add", result);
             }
             dismissAllowingStateLoss();
         });
@@ -65,6 +70,25 @@ public class AddAlarmDialog extends DialogFragment {
         });
 
         return binding.getRoot();
+    }
+
+    @Override
+    public void onDismiss(@NonNull DialogInterface dialog) {
+        super.onDismiss(dialog);
+        binding.alarmTitleEdit.setText("");
+        binding.alarmHourEdit.setText("");
+        binding.alarmMinuteEdit.setText("");
+        binding.mondayCheck.setChecked(false);
+        binding.tuesdayCheck.setChecked(false);
+        binding.wednesdayCheck.setChecked(false);
+        binding.thursdayCheck.setChecked(false);
+        binding.fridayCheck.setChecked(false);
+        binding.saturdayCheck.setChecked(false);
+        binding.sundayCheck.setChecked(false);
+        binding.alarmDisposableCheck.setChecked(false);
+        binding.vibCheck.setChecked(false);
+        binding.ringtoneEdit.setText("");
+        binding.alarmGroupEdit.setText("");
     }
 
     @Override
