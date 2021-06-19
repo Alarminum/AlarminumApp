@@ -54,5 +54,9 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:layout_gravity="bottom|end"
+        app:sdMainFabClosedIconColor="@color/white"
+        app:sdMainFabOpenedIconColor="@color/white"
+        app:sdMainFabClosedBackgroundColor="@color/black"
+        app:sdMainFabOpenedBackgroundColor="@color/black"
         app:sdMainFabClosedSrc="@drawable/ic_baseline_add_24" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

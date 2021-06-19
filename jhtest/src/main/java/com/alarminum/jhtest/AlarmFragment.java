@@ -66,7 +66,9 @@ public class AlarmFragment extends Fragment {
 
         alarmListViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(getActivity().getApplication())).get(AlarmListViewModel.class);
 
-        alarmListViewModel.getAllAlarms().observe(getViewLifecycleOwner(), adapter::submitList);
+        alarmListViewModel.getAllAlarms().observe(getViewLifecycleOwner(), alarmEntities -> {
+            adapter.submitList(alarmEntities);
+        });
 
 
         return view;
@@ -81,7 +83,6 @@ public class AlarmFragment extends Fragment {
                 StorageStrategy.createLongStorage())
                 .withSelectionPredicate(SelectionPredicates.createSelectAnything())
                 .build();
-
         addTrackerObserver();
     }
 

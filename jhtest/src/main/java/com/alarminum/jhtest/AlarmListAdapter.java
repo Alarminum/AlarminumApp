@@ -1,6 +1,5 @@
 package com.alarminum.jhtest;
 
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 

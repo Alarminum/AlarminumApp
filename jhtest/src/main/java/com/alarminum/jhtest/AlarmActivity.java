@@ -82,6 +82,7 @@ public class AlarmActivity extends AppCompatActivity {
                 String groupName = aGroupNameEditText.getText().toString();
                 newAlarm = new AlarmEntity(title, hour, minute, weekdayList, willVibe, ringtone, isDisposable, 1, 1);
 
+
                 replyIntent.putExtra(EXTRA_REPLY, newAlarm);
                 setResult(RESULT_OK, replyIntent);
             }

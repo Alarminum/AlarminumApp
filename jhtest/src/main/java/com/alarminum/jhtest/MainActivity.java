@@ -60,22 +60,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mainSpeedDial.addActionItem(new SpeedDialActionItem
                 .Builder(R.id.fab_add_alarm, R.drawable.ic_alarm_24)
                 .setLabel("알람")
-                .setFabBackgroundColor(ContextCompat.getColor(getApplicationContext(),R.color.teal_700))
+                .setFabBackgroundColor(ContextCompat.getColor(getApplicationContext(),R.color.white))
                 .create());
         mainSpeedDial.addActionItem(new SpeedDialActionItem
                 .Builder(R.id.fab_add_timer, R.drawable.ic_timer_24)
                 .setLabel("타이머")
-                .setFabBackgroundColor(ContextCompat.getColor(getApplicationContext(),R.color.teal_700))
+                .setFabBackgroundColor(ContextCompat.getColor(getApplicationContext(),R.color.white))
                 .create());
         mainSpeedDial.addActionItem(new SpeedDialActionItem
                 .Builder(R.id.fab_add_timetable, R.drawable.ic_timetable_24)
                 .setLabel("시간표")
-                .setFabBackgroundColor(ContextCompat.getColor(getApplicationContext(),R.color.teal_700))
+                .setFabBackgroundColor(ContextCompat.getColor(getApplicationContext(),R.color.white))
                 .create());
         mainSpeedDial.addActionItem(new SpeedDialActionItem
                 .Builder(R.id.fab_add_metro, R.drawable.ic_baseline_directions_subway_24)
                 .setLabel("지하철")
-                .setFabBackgroundColor(ContextCompat.getColor(getApplicationContext(),R.color.teal_700))
+                .setFabBackgroundColor(ContextCompat.getColor(getApplicationContext(),R.color.white))
                 .create());
 
         mainSpeedDial.setOnActionSelectedListener(actionItem -> {
@@ -85,11 +85,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     startActivityForResult(intent, NEW_ALARM_ACTIVITY_REQUEST_CODE);
                     //Intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
                     //startActivity(intent);
+                    mainSpeedDial.close();
                     break;
                 }
                 case R.id.fab_add_timer: {
                     Intent intent = new Intent(MainActivity.this, TimerActivity.class);
                     startActivityForResult(intent, NEW_TIMER_ACTIVITY_REQUEST_CODE);
+                    mainSpeedDial.close();
                     break;
                 }
                 default: {
