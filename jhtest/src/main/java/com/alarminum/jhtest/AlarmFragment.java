@@ -93,18 +93,15 @@ public class AlarmFragment extends Fragment {
                 if(selectionTracker.hasSelection() && (mainMenu.findItem(MENU_DELETE) == null)) {
                     mainMenu.add(Menu.NONE, MENU_DELETE, Menu.NONE, "Delete")
                         .setIcon(R.drawable.ic_baseline_delete_24)
-                        .setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-                            @Override
-                            public boolean onMenuItemClick(MenuItem item) {
-                                selectionTracker.getSelection().forEach((it)-> {
-                                    RecyclerView.ViewHolder holder = recyclerView.findViewHolderForItemId(it);
-                                    if(holder instanceof AlarmItemViewHolder) {
-                                        alarmListViewModel.delete(((AlarmItemViewHolder) holder).getElement());
-                                    }
-                                });
-                                selectionTracker.clearSelection();
-                                return true;
-                            }
+                        .setOnMenuItemClickListener(item -> {
+                            selectionTracker.getSelection().forEach((it)-> {
+                                RecyclerView.ViewHolder holder = recyclerView.findViewHolderForItemId(it);
+                                if(holder instanceof AlarmItemViewHolder) {
+                                    alarmListViewModel.delete(((AlarmItemViewHolder) holder).getElement());
+                                }
+                            });
+                            selectionTracker.clearSelection();
+                            return true;
                         })
                         .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
                 } else if (!selectionTracker.hasSelection() && (mainMenu.findItem(MENU_DELETE) != null)) {

@@ -24,12 +24,10 @@ public class AlarmItemViewHolder extends RecyclerView.ViewHolder {
         alarmTimeView = itemView.findViewById(R.id.alarm_time);
     }
 
-    public void bind(AlarmEntity alarm, Boolean isSelected) {
+    public void bind(AlarmEntity alarm) {
         this.alarm = alarm;
         alarmTitleView.setText(alarm.label);
         alarmTimeView.setText(String.format("%02d:%02d", alarm.hour, alarm.minute));
-        this.itemView.setAlpha((float) (isSelected ? 0.5 : 1.0));
-        Log.d("rcViewSel", "is Selected? " + (isSelected ? "true" : "false") + ", aid: " + alarm.aid + ", position: " + getAdapterPosition());
     }
 
     static AlarmItemViewHolder create(ViewGroup parent) {
