@@ -14,6 +14,9 @@ public class AlarmGroup implements Serializable {
 
     public String label;
 
+    @ColumnInfo(name = "group_type")
+    public int groupType;
+
     public int vibration = 1;
 
     public String ringtone = null;
@@ -25,17 +28,19 @@ public class AlarmGroup implements Serializable {
 
     public AlarmGroup() {}
 
-    public AlarmGroup(String label, int vibration, String ringtone, int settingOverride, int activated) {
+    public AlarmGroup(String label, int groupType, int vibration, String ringtone, int settingOverride, int activated) {
         this.label = label;
+        this.groupType = groupType;
         this.vibration = vibration;
         this.ringtone = ringtone;
         this.settingOverride = settingOverride;
         this.activated = activated;
     }
 
-    public AlarmGroup(int gid, String label, int vibration, String ringtone, int settingOverride, int activated) {
+    public AlarmGroup(int gid, String label, int groupType , int vibration, String ringtone, int settingOverride, int activated) {
         this.gid = gid;
         this.label = label;
+        this.groupType = groupType;
         this.vibration = vibration;
         this.ringtone = ringtone;
         this.settingOverride = settingOverride;
@@ -44,12 +49,14 @@ public class AlarmGroup implements Serializable {
 
     public boolean equals(@Nullable AlarmGroup obj) {
         boolean labelEqual = this.label.equals(obj.label);
+        boolean typeEqual = (this.groupType == obj.groupType);
         boolean vibEqual = (this.vibration == obj.vibration);
         boolean ringtoneEqual = this.ringtone.equals(obj.ringtone);
         boolean overrideEqual = (this.settingOverride == obj.settingOverride);
         boolean activeEqual = (this.activated == obj.activated);
 
         return (labelEqual
+                && typeEqual
                 && vibEqual
                 && ringtoneEqual
                 && overrideEqual

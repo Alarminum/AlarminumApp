@@ -27,9 +27,6 @@ public abstract class AlarmDatabase extends RoomDatabase {
     // Get application context when initialize DB
     // At this time, inner class(DBHolder) is not initialized.
     protected AlarmDatabase() {};
-    private static final int THREADS = 4;
-    public static final ExecutorService dbWriteExecutor =
-            Executors.newFixedThreadPool(THREADS);
 
     // Define INSTANCE in DBHolder
     // It will be invoked when 'DBHolder.INSTANCE' is referred.
@@ -52,14 +49,17 @@ public abstract class AlarmDatabase extends RoomDatabase {
 
             AppExecutors.getInstance().getDiskIO().execute(() -> {
                 AlarmGroupDao groupDao = DBHolder.INSTANCE.groupDao();
-                groupDao.insert(new AlarmGroup(
-                        1,
-                        "기본 알람",
-                        0,
-                        null,
-                        0,
-                        1
-                ));
+                AlarmDao alarmDao = DBHolder.INSTANCE.alarmDao();
+                Integer[] weekdays = new Integer[] {1,1,1,1,0,1,1};
+                groupDao.insert(new AlarmGroup(1, "기본 알람 그룹", 0, 0,null, 0, 1));
+                groupDao.insert(new AlarmGroup(2, "기본 타이머 그룹", 1, 0,null, 0, 1));
+                alarmDao.insert((new AlarmEntity("test1",12,30, weekdays,1,null,0,1,1)));
+                alarmDao.insert((new AlarmEntity("test2",12,30, weekdays,1,null,0,1,1)));
+                alarmDao.insert((new AlarmEntity("test3",12,30, weekdays,1,null,0,1,1)));
+                alarmDao.insert((new AlarmEntity("test4",12,30, weekdays,1,null,0,1,1)));
+                alarmDao.insert((new AlarmEntity("test5",12,30, weekdays,1,null,0,1,1)));
+                alarmDao.insert((new AlarmEntity("test6",12,30, weekdays,1,null,0,1,1)));
+
             });
         }
     };
