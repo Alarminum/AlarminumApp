@@ -1,8 +1,10 @@
 package com.alarminum.yhtest;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -10,12 +12,25 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
 public class MainActivity extends AppCompatActivity {
 
     ArrayAdapter<CharSequence> adspin1, adspin2, adspin3;
     String choice_do="";
     String choice_se="";
     String choice_des="";
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    CollectionReference subway = db.collection("subway");
+    String test = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -107,9 +122,37 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(MainActivity.this, choice_do+"="+choice_se + " 에서 " + choice_des, Toast.LENGTH_SHORT).show();
+                //이 아래는 필요 없음.. 그냥 한겨~ 두번째 꺼만 필요함
+                subway.whereEqualTo("stationname", choice_se)
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if(task.isSuccessful()){
+                                    for(QueryDocumentSnapshot document : task.getResult()){
+                                        Log.d("test", document.getId() + "=>" + document.getData());
+                                    }
+                                }else{
+                                    Log.d("Test" ,"error : ", task.getException());
+                                }
+                            }
+                        });
+                subway.whereEqualTo("stationname", choice_se)
+                        .get()
+                        .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                            @Override
+                            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                for(DocumentSnapshot ds : queryDocumentSnapshots.getDocuments()){
+                                    String value = ds.get("interval").toString();
+                                    Log.d("test", "value : "+ value);
+                                }
+                            }
+                        });
             }
         });
     }
-//
+
+
+
 
 }
