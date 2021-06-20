@@ -8,6 +8,7 @@ import com.alarminum.alarminumapp.database.AlarmDatabase;
 import com.alarminum.alarminumapp.database.AlarmGroup;
 import com.alarminum.alarminumapp.database.AlarmGroupDao;
 import com.alarminum.alarminumapp.utils.AppExecutors;
+import com.alarminum.alarminumapp.utils.Result;
 
 import java.util.List;
 
@@ -19,8 +20,25 @@ public class GroupRepository  {
         groupDao = db.groupDao();
     }
 
-    public int getLatestGid() {
-        return groupDao.getLatestGroup().gid;
+    public void getLatestGid(final RepositoryCallback<Integer> callback) {
+        AppExecutors.getInstance().getDiskIO().execute(() -> {
+            try {
+                Result<Integer> result = getLatestGidSync();
+                callback.onComplete(result);
+            } catch (Exception e) {
+                Result<Integer> errorResult = new Result.Error<>(e);
+                callback.onComplete(errorResult);
+            }
+        });
+    }
+
+    private Result<Integer> getLatestGidSync() {
+        try {
+            int gid = groupDao.getLatestGroup().gid;
+            return new Result.Success<>(gid);
+        } catch (Exception e) {
+            return new Result.Error<>(e);
+        }
     }
 
     public void insert(AlarmGroup group) {

@@ -2,6 +2,7 @@ package com.alarminum.alarminumapp.viewmodel;
 
 import android.app.Application;
 import android.util.Log;
+import android.view.ViewGroup;
 
 import androidx.lifecycle.AndroidViewModel;
 
@@ -33,45 +34,45 @@ public class AddTimeTableViewModel extends AndroidViewModel {
     public void insertTimeTable(String username, String password) {
         timeTableRepo.makeTimeTableRequest(username, password, result -> {
             if(result instanceof Result.Success) {
-                try {
-                    JSONObject jsonObject = ((Result.Success<JSONObject>) result).data;
-                    AlarmGroup newTimetable = new AlarmGroup(
-                            "2021-1",
-                            0,
-                            true,
-                            null,
-                            true,
-                            true
-                    );
-                    groupRepo.insert(newTimetable);
-                    int gid = groupRepo.getLatestGid();
-                    Log.d("timetable", "new gid: "+gid);
-                    JSONArray subjects = jsonObject.getJSONArray("subject");
-                    for(int i=0; i<subjects.length(); i++) {
-                        jsonObject = subjects.getJSONObject(i);
-                        Integer[] weekdays = {0,0,0,0,0,0,0};
-                        int day1 = jsonObject.getJSONArray("day").getJSONObject(0).getInt("day1");
-                        int day2 = jsonObject.getJSONArray("day").getJSONObject(1).getInt("day2");
-                        weekdays[day1] = 1;
-                        if(day2 != -1) {
-                            weekdays[day2] = 1;
+                final JSONObject[] jsonObject = {((Result.Success<JSONObject>) result).data};
+                AlarmGroup newTimetable = new AlarmGroup(
+                        "2021-1",
+                        0,
+                        true,
+                        null,
+                        true,
+                        true
+                );
+                groupRepo.insert(newTimetable);
+                groupRepo.getLatestGid(r -> {
+                    try {
+                        JSONArray subjects = jsonObject[0].getJSONArray("subject");
+                        for(int i=0; i<subjects.length(); i++) {
+                            jsonObject[0] = subjects.getJSONObject(i);
+                            Integer[] weekdays = {0,0,0,0,0,0,0};
+                            int day1 = jsonObject[0].getJSONArray("day").getJSONObject(0).getInt("day1");
+                            int day2 = jsonObject[0].getJSONArray("day").getJSONObject(1).getInt("day2");
+                            weekdays[day1] = 1;
+                            if(day2 != -1) {
+                                weekdays[day2] = 1;
+                            }
+                            AlarmEntity newAlarm = new AlarmEntity(
+                                    jsonObject[0].getString("name"),
+                                    jsonObject[0].getInt("hour"),
+                                    jsonObject[0].getInt("minute"),
+                                    weekdays,
+                                    true,
+                                    null,
+                                    false,
+                                    true,
+                                    (int) ((Result.Success<Integer>)r).data
+                            );
+                            alarmRepo.insert(newAlarm);
                         }
-                        AlarmEntity newAlarm = new AlarmEntity(
-                                jsonObject.getString("name"),
-                                jsonObject.getInt("hour"),
-                                jsonObject.getInt("minute"),
-                                weekdays,
-                                true,
-                                null,
-                                false,
-                                true,
-                                (int) gid
-                        );
-                        alarmRepo.insert(newAlarm);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                });
             } else {
                 Log.d("TimeTableRequest", ((Result.Error)result).exception + " : Time Table request failed");
             }
