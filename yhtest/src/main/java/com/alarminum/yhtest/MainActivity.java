@@ -146,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
                     spin2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int i, long l) {
-                            startLine.add(adspin2.getItem(i).toString());
+                            startStation.add(adspin2.getItem(i).toString());
                         }
 
                         @Override
@@ -170,130 +170,135 @@ public class MainActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
-        if(checkBox.isChecked()){
-            adspin4 = ArrayAdapter.createFromResource(this, R.array.spinner_line, android.R.layout.simple_spinner_dropdown_item);
-            adspin4.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spin4.setAdapter(adspin4);
-            spin4.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> parent, View view, int i, long l) {
-                    if (adspin4.getItem(i).equals("1호선")) {
-                        startLine.add("1호선");
-                        adspin5 = ArrayAdapter.createFromResource(MainActivity.this, R.array.spinner_line1, android.R.layout.simple_spinner_dropdown_item);
-                        adspin6 = ArrayAdapter.createFromResource(MainActivity.this, R.array.spinner_line1, android.R.layout.simple_spinner_dropdown_item);
-                        adspin5.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                        adspin6.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                        spin5.setAdapter(adspin5);
-                        spin6.setAdapter(adspin6);
-                        spin5.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                            @Override
-                            public void onItemSelected(AdapterView<?> parent, View view, int i, long l) {
-                                startStation.add(adspin5.getItem(i).toString());
-                            }
 
-                            @Override
-                            public void onNothingSelected(AdapterView<?> parent) {
-                            }
-                        });
-                        spin6.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                            @Override
-                            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                                endStation.add(adspin6.getItem(position).toString());
-                            }
+        checkBox.setOnCheckedChangeListener((v, isChecked) -> {
+            if(isChecked){
+                adspin4 = ArrayAdapter.createFromResource(this, R.array.spinner_line, android.R.layout.simple_spinner_dropdown_item);
+                adspin4.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spin4.setAdapter(adspin4);
+                spin4.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int i, long l) {
+                        if (adspin4.getItem(i).equals("1호선")) {
+                            startLine.add("1호선");
+                            adspin5 = ArrayAdapter.createFromResource(MainActivity.this, R.array.spinner_line1, android.R.layout.simple_spinner_dropdown_item);
+                            adspin6 = ArrayAdapter.createFromResource(MainActivity.this, R.array.spinner_line1, android.R.layout.simple_spinner_dropdown_item);
+                            adspin5.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                            adspin6.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                            spin5.setAdapter(adspin5);
+                            spin6.setAdapter(adspin6);
+                            spin5.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                @Override
+                                public void onItemSelected(AdapterView<?> parent, View view, int i, long l) {
+                                    startStation.add(adspin5.getItem(i).toString());
+                                }
 
-                            @Override
-                            public void onNothingSelected(AdapterView<?> parent) {
-                            }
-                        });
-                    } else if (adspin4.getItem(i).equals("2호선")) {
-                        startLine.add("2호선");
-                        adspin5 = ArrayAdapter.createFromResource(MainActivity.this, R.array.spinner_line2, android.R.layout.simple_spinner_dropdown_item);
-                        adspin6 = ArrayAdapter.createFromResource(MainActivity.this, R.array.spinner_line2, android.R.layout.simple_spinner_dropdown_item);
-                        adspin5.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                        adspin6.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                        spin5.setAdapter(adspin5);
-                        spin6.setAdapter(adspin6);
-                        spin5.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                            @Override
-                            public void onItemSelected(AdapterView<?> parent, View view, int i, long l) {
-                                startStation.add(adspin5.getItem(i).toString());
-                            }
+                                @Override
+                                public void onNothingSelected(AdapterView<?> parent) {
+                                }
+                            });
+                            spin6.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                @Override
+                                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                    endStation.add(adspin6.getItem(position).toString());
+                                }
 
-                            @Override
-                            public void onNothingSelected(AdapterView<?> parent) {
-                            }
-                        });
-                        spin6.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                            @Override
-                            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                                endStation.add(adspin6.getItem(position).toString());
-                            }
+                                @Override
+                                public void onNothingSelected(AdapterView<?> parent) {
+                                }
+                            });
+                        } else if (adspin4.getItem(i).equals("2호선")) {
+                            startLine.add("2호선");
+                            adspin5 = ArrayAdapter.createFromResource(MainActivity.this, R.array.spinner_line2, android.R.layout.simple_spinner_dropdown_item);
+                            adspin6 = ArrayAdapter.createFromResource(MainActivity.this, R.array.spinner_line2, android.R.layout.simple_spinner_dropdown_item);
+                            adspin5.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                            adspin6.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                            spin5.setAdapter(adspin5);
+                            spin6.setAdapter(adspin6);
+                            spin5.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                @Override
+                                public void onItemSelected(AdapterView<?> parent, View view, int i, long l) {
+                                    startStation.add(adspin5.getItem(i).toString());
+                                }
 
-                            @Override
-                            public void onNothingSelected(AdapterView<?> parent) {
-                            }
-                        });
-                    } else if (adspin4.getItem(i).equals("3호선")) {
-                        startLine.add("3호선");
-                        adspin5 = ArrayAdapter.createFromResource(MainActivity.this, R.array.spinner_line2, android.R.layout.simple_spinner_dropdown_item);
-                        adspin6 = ArrayAdapter.createFromResource(MainActivity.this, R.array.spinner_line2, android.R.layout.simple_spinner_dropdown_item);
-                        adspin5.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                        adspin6.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                        spin5.setAdapter(adspin5);
-                        spin6.setAdapter(adspin6);
-                        spin5.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                            @Override
-                            public void onItemSelected(AdapterView<?> parent, View view, int i, long l) {
-                                startStation.add(adspin5.getItem(i).toString());
-                            }
+                                @Override
+                                public void onNothingSelected(AdapterView<?> parent) {
+                                }
+                            });
+                            spin6.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                @Override
+                                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                    endStation.add(adspin6.getItem(position).toString());
+                                }
 
-                            @Override
-                            public void onNothingSelected(AdapterView<?> parent) {
-                            }
-                        });
-                        spin6.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                            @Override
-                            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                                endStation.add(adspin6.getItem(position).toString());
-                            }
+                                @Override
+                                public void onNothingSelected(AdapterView<?> parent) {
+                                }
+                            });
+                        } else if (adspin4.getItem(i).equals("3호선")) {
+                            startLine.add("3호선");
+                            adspin5 = ArrayAdapter.createFromResource(MainActivity.this, R.array.spinner_line2, android.R.layout.simple_spinner_dropdown_item);
+                            adspin6 = ArrayAdapter.createFromResource(MainActivity.this, R.array.spinner_line2, android.R.layout.simple_spinner_dropdown_item);
+                            adspin5.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                            adspin6.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                            spin5.setAdapter(adspin5);
+                            spin6.setAdapter(adspin6);
+                            spin5.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                @Override
+                                public void onItemSelected(AdapterView<?> parent, View view, int i, long l) {
+                                    startStation.add(adspin5.getItem(i).toString());
+                                }
 
-                            @Override
-                            public void onNothingSelected(AdapterView<?> parent) {
-                            }
-                        });
-                    } else {
-                        startLine.add("4호선");
-                        adspin5 = ArrayAdapter.createFromResource(MainActivity.this, R.array.spinner_line2, android.R.layout.simple_spinner_dropdown_item);
-                        adspin6 = ArrayAdapter.createFromResource(MainActivity.this, R.array.spinner_line2, android.R.layout.simple_spinner_dropdown_item);
-                        adspin5.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                        adspin6.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                        spin5.setAdapter(adspin5);
-                        spin6.setAdapter(adspin6);
-                        spin5.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                            @Override
-                            public void onItemSelected(AdapterView<?> parent, View view, int i, long l) {
-                                startLine.add(adspin5.getItem(i).toString());
-                            }
+                                @Override
+                                public void onNothingSelected(AdapterView<?> parent) {
+                                }
+                            });
+                            spin6.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                @Override
+                                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                    endStation.add(adspin6.getItem(position).toString());
+                                }
 
-                            @Override
-                            public void onNothingSelected(AdapterView<?> parent) {
-                            }
-                        });
-                        spin6.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                            @Override
-                            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                                endStation.add(adspin6.getItem(position).toString());
-                            }
+                                @Override
+                                public void onNothingSelected(AdapterView<?> parent) {
+                                }
+                            });
+                        } else {
+                            startLine.add("4호선");
+                            adspin5 = ArrayAdapter.createFromResource(MainActivity.this, R.array.spinner_line2, android.R.layout.simple_spinner_dropdown_item);
+                            adspin6 = ArrayAdapter.createFromResource(MainActivity.this, R.array.spinner_line2, android.R.layout.simple_spinner_dropdown_item);
+                            adspin5.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                            adspin6.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                            spin5.setAdapter(adspin5);
+                            spin6.setAdapter(adspin6);
+                            spin5.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                @Override
+                                public void onItemSelected(AdapterView<?> parent, View view, int i, long l) {
+                                    startLine.add(adspin5.getItem(i).toString());
+                                }
 
-                            @Override
-                            public void onNothingSelected(AdapterView<?> parent) {
-                            }
-                        });
+                                @Override
+                                public void onNothingSelected(AdapterView<?> parent) {
+                                }
+                            });
+                            spin6.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                @Override
+                                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                    endStation.add(adspin6.getItem(position).toString());
+                                }
+
+                                @Override
+                                public void onNothingSelected(AdapterView<?> parent) {
+                                }
+                            });
+                        }
                     }
-                }
-                public void onNothingSelected(AdapterView<?> parent) {
-                }});
-        }
+                    public void onNothingSelected(AdapterView<?> parent) {
+                    }});
+            }
+
+        });
+
 
 
         btn_refresh.setOnClickListener(new View.OnClickListener() {
@@ -339,6 +344,7 @@ public class MainActivity extends AppCompatActivity {
                                                                             for (QueryDocumentSnapshot ds : task.getResult()) {
                                                                                 Integer interval_temp = Integer.parseInt(ds.get("interval").toString());
                                                                                 interval = interval + interval_temp;
+                                                                                Log.d("intev", "new interval : " + interval_temp);
                                                                             }
                                                                             Log.d("test", "Result interval : " + interval);
                                                                             Result.add(interval);

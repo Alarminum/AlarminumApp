@@ -1,5 +1,13 @@
 package com.alarminum.alarminumapp;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -7,6 +15,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,8 +28,16 @@ import androidx.recyclerview.selection.StorageStrategy;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.alarminum.alarminumapp.receivers.AlarmReceiver;
+import com.alarminum.alarminumapp.receivers.DeviceBootReceiver;
 import com.alarminum.alarminumapp.view.AlarmDetailsLookup;
 import com.alarminum.alarminumapp.viewmodel.AlarmListViewModel;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Locale;
 
 
 public class AlarmFragment extends Fragment {
@@ -68,6 +85,23 @@ public class AlarmFragment extends Fragment {
         alarmListViewModel.getAllAlarms().observe(getViewLifecycleOwner(), alarmEntities -> {
             adapter.submitList(alarmEntities);
         });
+
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("daily alarm", getActivity().MODE_PRIVATE);
+        long millis = sharedPreferences.getLong("nextNotifyTime", Calendar.getInstance().getTimeInMillis());
+
+        Calendar nextNotifyTime = new GregorianCalendar();
+        nextNotifyTime.setTimeInMillis(millis);
+
+        Date nextDate = nextNotifyTime.getTime();
+        String date_text = new SimpleDateFormat("yyyy년 MM월 dd일 EE요일 a hh시 mm분 ", Locale.getDefault()).format(nextDate);
+        Toast.makeText(getContext().getApplicationContext(),"[처음 실행시] 다음 알람은 " + date_text + "으로 알람이 설정되었습니다!", Toast.LENGTH_SHORT).show();
+
+
+        // 이전 설정값으로 TimePicker 초기화
+        Date currentTime = nextNotifyTime.getTime();
+        SimpleDateFormat HourFormat = new SimpleDateFormat("kk", Locale.getDefault());
+        SimpleDateFormat MinuteFormat = new SimpleDateFormat("mm", Locale.getDefault());
+
 
 
         return view;

@@ -54,7 +54,7 @@ public class AddAlarmDialog extends DialogFragment {
                         binding.vibCheck.isChecked(),
                         binding.ringtoneEdit.getText().toString(),
                         binding.alarmDisposableCheck.isChecked(),
-                        true, 1
+                        false, 1
                 );
 
                 addAlarmViewModel.insert(newAlarm);
