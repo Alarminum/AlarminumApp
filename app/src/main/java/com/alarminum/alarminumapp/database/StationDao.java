@@ -21,10 +21,4 @@ public interface StationDao {
 
     @Query("SELECT * FROM stations WHERE station_name = :sName AND line_num <> :currentLineNum")
     StationEntity getIntersectionWithNameAndLine(String sName, int currentLineNum);
-
-    @Insert
-    void insert(StationEntity station);
-
-    @Delete
-    void delete(StationEntity station);
 }
