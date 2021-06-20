@@ -10,7 +10,6 @@ import com.alarminum.alarminumapp.database.AlarmGroupDao;
 import com.alarminum.alarminumapp.utils.AppExecutors;
 
 import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
 
 public class GroupRepository  {
     private AlarmGroupDao groupDao;

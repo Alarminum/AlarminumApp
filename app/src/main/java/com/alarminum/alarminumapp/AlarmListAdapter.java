@@ -1,5 +1,6 @@
 package com.alarminum.alarminumapp;
 
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -9,9 +10,11 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 
 import com.alarminum.alarminumapp.database.AlarmEntity;
+import com.alarminum.alarminumapp.databinding.AlarmdetailBinding;
 
 
 public class AlarmListAdapter extends ListAdapter<AlarmEntity, AlarmItemViewHolder> {
+    private AlarmdetailBinding binding;
     private SelectionTracker<Long> selectionTracker;
     public int expandedItemPosition = -1;
 
@@ -20,8 +23,14 @@ public class AlarmListAdapter extends ListAdapter<AlarmEntity, AlarmItemViewHold
         setHasStableIds(true);
     }
 
+
     @Override
     public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
         return position;
     }
 
@@ -32,7 +41,8 @@ public class AlarmListAdapter extends ListAdapter<AlarmEntity, AlarmItemViewHold
     @NonNull
     @Override
     public AlarmItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return AlarmItemViewHolder.create(parent);
+        binding = AlarmdetailBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false );
+        return new AlarmItemViewHolder(binding);
     }
 
     @Override
@@ -42,9 +52,9 @@ public class AlarmListAdapter extends ListAdapter<AlarmEntity, AlarmItemViewHold
             holder.bind(current);
 
             boolean isSelected = selectionTracker.isSelected((long) position);
-            holder.itemView.setAlpha((float) (isSelected ? 0.5 : 1.0));
+            binding.getRoot().setAlpha((float) (isSelected ? 0.5 : 1.0));
 
-            holder.itemView.setOnClickListener(v->{
+            binding.alarmDetailHeader.setOnClickListener(v->{
                 if(position == expandedItemPosition) {
                     notifyItemChanged(position);
                     expandedItemPosition = -1;
@@ -56,8 +66,8 @@ public class AlarmListAdapter extends ListAdapter<AlarmEntity, AlarmItemViewHold
                     notifyItemChanged(position);
                 }
             });
-
-            holder.alarmTitleView.setVisibility((position == expandedItemPosition) ? View.VISIBLE : View.GONE);
+            binding.alarmUpdown.setRotation((position == expandedItemPosition) ? 0.0f : 180.0f);
+            binding.alarmDetailContainer.setVisibility((position == expandedItemPosition) ? View.VISIBLE : View.GONE);
         }
     }
 

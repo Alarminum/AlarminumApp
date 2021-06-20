@@ -1,6 +1,7 @@
 package com.alarminum.alarminumapp;
 
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,30 +12,43 @@ import androidx.recyclerview.selection.ItemDetailsLookup;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alarminum.alarminumapp.database.AlarmEntity;
+import com.alarminum.alarminumapp.databinding.AlarmdetailBinding;
 
 
 public class AlarmItemViewHolder extends RecyclerView.ViewHolder {
     private AlarmEntity alarm;
-    public final TextView alarmTitleView;
-    public final TextView alarmTimeView;
+    private final AlarmdetailBinding binding;
 
-    private AlarmItemViewHolder(View itemView) {
-        super(itemView);
-        alarmTitleView = itemView.findViewById(R.id.alarm_title);
-        alarmTimeView = itemView.findViewById(R.id.alarm_time);
+    public AlarmItemViewHolder(AlarmdetailBinding binding) {
+        super(binding.getRoot());
+        this.binding = binding;
     }
 
+    @SuppressLint("SetTextI18n")
     public void bind(AlarmEntity alarm) {
         this.alarm = alarm;
-        alarmTimeView.setText(String.format("%02d:%02d", alarm.hour, alarm.minute));
-        alarmTitleView.setText(alarm.label);
+        binding.alarmDetailTitle.setText(alarm.label);
+        binding.alarmDetailHour.setText(Integer.toString(alarm.hour));
+        binding.alarmDetailMinute.setText(Integer.toString(alarm.minute));
+        binding.alarmDetailSwitch.setChecked(alarm.activated);
+        binding.alarmDetailMonday.setChecked(alarm.weekdayList[0]==1);
+        binding.alarmDetailTuesday.setChecked(alarm.weekdayList[1]==1);
+        binding.alarmDetailWednesday.setChecked(alarm.weekdayList[2]==1);
+        binding.alarmDetailThursday.setChecked(alarm.weekdayList[3]==1);
+        binding.alarmDetailFriday.setChecked(alarm.weekdayList[4]==1);
+        binding.alarmDetailSaturday.setChecked(alarm.weekdayList[5]==1);
+        binding.alarmDetailSunday.setChecked(alarm.weekdayList[6]==1);
+        binding.alarmDetailRingtone.setText(alarm.ringtone);
+        binding.alarmDetailVib.setChecked(alarm.vibration);
+        binding.alarmDetailForOnce.setChecked(alarm.forOnce);
+
     }
 
-    static AlarmItemViewHolder create(ViewGroup parent) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.recyclerview_item, parent, false);
-        return new AlarmItemViewHolder(view);
-    }
+//    static AlarmItemViewHolder create(ViewGroup parent) {
+//        View view = LayoutInflater.from(parent.getContext())
+//                .inflate(R.layout.recyclerview_item, parent, false);
+//        return new AlarmItemViewHolder(binding);
+//    }
 
     public final AlarmEntity getElement() {
         return alarm;
