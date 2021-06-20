@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     CollectionReference subway = db.collection("subway");
     String test = "";
 
+    ///ttt
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -148,6 +149,7 @@ public class MainActivity extends AppCompatActivity {
                                 }
                             }
                         });
+
             }
         });
     }
