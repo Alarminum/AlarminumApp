@@ -9,10 +9,10 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import com.alarminum.alarminumapp.utils.AppExecutors;
 
-@Database(entities = {AlarmEntity.class, TimerEntity.class}, version = 1, exportSchema = false)
+
+@Database(entities = {AlarmEntity.class, TimerEntity.class, AlarmGroup.class, StationEntity.class}, version = 1, exportSchema = false)
 @TypeConverters({Converters.class})
 public abstract class AlarmDatabase extends RoomDatabase {
     // Apply singleton pattern(Lazy holder)
@@ -20,13 +20,11 @@ public abstract class AlarmDatabase extends RoomDatabase {
     private static Context appContext;
     public abstract AlarmDao alarmDao();
     public abstract TimerDao timerDao();
+    public abstract AlarmGroupDao groupDao();
 
     // Get application context when initialize DB
     // At this time, inner class(DBHolder) is not initialized.
     protected AlarmDatabase() {};
-    private static final int THREADS = 4;
-    public static final ExecutorService dbWriteExecutor =
-            Executors.newFixedThreadPool(THREADS);
 
     // Define INSTANCE in DBHolder
     // It will be invoked when 'DBHolder.INSTANCE' is referred.
@@ -42,14 +40,25 @@ public abstract class AlarmDatabase extends RoomDatabase {
         return DBHolder.INSTANCE;
     }
 
-    private static RoomDatabase.Callback sRoomDBCallback = new RoomDatabase.Callback() {
+    private static Callback sRoomDBCallback = new Callback() {
         @Override
         public void onCreate(@NonNull SupportSQLiteDatabase db) {
             super.onCreate(db);
 
-            dbWriteExecutor.execute(()->{
-                AlarmDao dao = DBHolder.INSTANCE.alarmDao();
-                dao.deleteAll();
+            AppExecutors.getInstance().getDiskIO().execute(() -> {
+                AlarmGroupDao groupDao = DBHolder.INSTANCE.groupDao();
+                AlarmDao alarmDao = DBHolder.INSTANCE.alarmDao();
+                Integer[] weekdays = new Integer[] {1,1,1,1,0,1,1};
+                groupDao.insert(new AlarmGroup(1, "기본 알람 그룹", 0, 0,null, 0, 1));
+                groupDao.insert(new AlarmGroup(2, "기본 타이머 그룹", 1, 0,null, 0, 1));
+                alarmDao.insert((new AlarmEntity("test1",12,30, weekdays,true,null,false,true,1)));
+                alarmDao.insert((new AlarmEntity("test2",12,30, weekdays,true,null,false,true,1)));
+                alarmDao.insert((new AlarmEntity("test3",12,30, weekdays,true,null,false,true,1)));
+                alarmDao.insert((new AlarmEntity("test4",12,30, weekdays,true,null,false,true,1)));
+                alarmDao.insert((new AlarmEntity("test5",12,30, weekdays,true,null,false,true,1)));
+                alarmDao.insert((new AlarmEntity("test6",12,30, weekdays,true,null,false,true,1)));
+
+
             });
         }
     };

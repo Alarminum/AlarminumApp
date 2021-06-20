@@ -22,4 +22,14 @@ public class Converters {
         }
         return weekdays;
     }
+
+    @TypeConverter
+    public static int fromBoolean(boolean b) {
+        return b ? 1 : 0;
+    }
+
+    @TypeConverter
+    public static boolean fromIntegerToBoolean(int i) {
+        return i==1;
+    }
 }

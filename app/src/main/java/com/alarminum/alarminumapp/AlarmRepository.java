@@ -1,4 +1,4 @@
-package com.alarminum.alarminumapp.repository;
+package com.alarminum.alarminumapp;
 
 import android.app.Application;
 

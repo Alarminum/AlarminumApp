@@ -1,142 +1,147 @@
 package com.alarminum.alarminumapp;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
+import android.view.MenuItem;
 
-import androidx.annotation.Nullable;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
-import androidx.core.content.res.ResourcesCompat;
-import androidx.fragment.app.Fragment;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-
-import com.alarminum.alarminumapp.database.AlarmEntity;
-import com.alarminum.alarminumapp.database.TimerEntity;
-import com.alarminum.alarminumapp.viewmodel.AlarmViewModel;
+import com.alarminum.alarminumapp.fragments.AddAlarmDialog;
+import com.alarminum.alarminumapp.fragments.AddTimerDialog;
+import com.alarminum.alarminumapp.viewmodel.GroupListViewModel;
 import com.leinardi.android.speeddial.SpeedDialActionItem;
 import com.leinardi.android.speeddial.SpeedDialView;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    private AlarmViewModel alarmViewModel;
+public class MainActivity extends AppCompatActivity {
     FragmentManager fragmentManager;
     FragmentTransaction ft;
-
     AlarmFragment alarmFragment;
     TimerFragment timerFragment;
 
-    public static final int NEW_ALARM_ACTIVITY_REQUEST_CODE = 1;
-    public static final int NEW_TIMER_ACTIVITY_REQUEST_CODE = 2;
+    AddAlarmDialog addAlarmDialog;
+    AddTimerDialog addTimerDialog;
 
+    DrawerLayout mDrawerLayout;
+
+    SpeedDialView mainSpeedDial;
+
+    RecyclerView groupList;
+    GroupListAdapter adapter;
+    GroupListViewModel groupListViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        fragmentManager = getSupportFragmentManager();
+        Toolbar mainToolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(mainToolbar);
+        mDrawerLayout = findViewById(R.id.drawer_layout);
 
-        Button alarmPageButton = findViewById(R.id.alarm_page_btn);
-        Button timerPageButton = findViewById(R.id.timer_page_btn);
+        groupList = findViewById(R.id.group_rcview);
+        adapter = new GroupListAdapter(this, new GroupListAdapter.GroupDiff());
+        groupList.setLayoutManager(new LinearLayoutManager(this));
+        groupList.setAdapter(adapter);
+
+        groupListViewModel = new ViewModelProvider(this,ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication())).get(GroupListViewModel.class);
+
+        groupListViewModel.getAllGroups().observe(this,adapter::submitList);
+
+        fragmentManager = getSupportFragmentManager();
+        fragmentManager.setFragmentResultListener("add", this, (requestKey, result) -> {
+            int groupID = result.getInt("group");
+            ft = fragmentManager.beginTransaction();
+            ft.replace(R.id.fragment_container, groupID==0 ? alarmFragment : timerFragment);
+            ft.addToBackStack(null);
+            ft.commit();
+        });
 
         alarmFragment = new AlarmFragment();
         timerFragment = new TimerFragment();
+
+        addAlarmDialog = new AddAlarmDialog();
+        addTimerDialog = new AddTimerDialog();
 
         ft = fragmentManager.beginTransaction();
         ft.add(R.id.fragment_container, alarmFragment);
         ft.addToBackStack(null);
         ft.commit();
 
-        alarmPageButton.setOnClickListener(this);
-        timerPageButton.setOnClickListener(this);
-
-        SpeedDialView mainSpeedDial = findViewById(R.id.mainSD);
+        mainSpeedDial = findViewById(R.id.mainSD);
         mainSpeedDial.addActionItem(new SpeedDialActionItem
                 .Builder(R.id.fab_add_alarm, R.drawable.ic_alarm_24)
                 .setLabel("알람")
-                .setFabBackgroundColor(ContextCompat.getColor(getApplicationContext(),R.color.teal_700))
+                .setFabBackgroundColor(ContextCompat.getColor(getApplicationContext(),R.color.white))
                 .create());
         mainSpeedDial.addActionItem(new SpeedDialActionItem
                 .Builder(R.id.fab_add_timer, R.drawable.ic_timer_24)
                 .setLabel("타이머")
-                .setFabBackgroundColor(ContextCompat.getColor(getApplicationContext(),R.color.teal_700))
+                .setFabBackgroundColor(ContextCompat.getColor(getApplicationContext(),R.color.white))
                 .create());
         mainSpeedDial.addActionItem(new SpeedDialActionItem
                 .Builder(R.id.fab_add_timetable, R.drawable.ic_timetable_24)
                 .setLabel("시간표")
-                .setFabBackgroundColor(ContextCompat.getColor(getApplicationContext(),R.color.teal_700))
+                .setFabBackgroundColor(ContextCompat.getColor(getApplicationContext(),R.color.white))
                 .create());
         mainSpeedDial.addActionItem(new SpeedDialActionItem
                 .Builder(R.id.fab_add_metro, R.drawable.ic_baseline_directions_subway_24)
                 .setLabel("지하철")
-                .setFabBackgroundColor(ContextCompat.getColor(getApplicationContext(),R.color.teal_700))
+                .setFabBackgroundColor(ContextCompat.getColor(getApplicationContext(),R.color.white))
                 .create());
 
-        mainSpeedDial.setOnActionSelectedListener(new SpeedDialView.OnActionSelectedListener() {
-            @Override
-            public boolean onActionSelected(SpeedDialActionItem actionItem) {
-                switch (actionItem.getId()) {
-                    case R.id.fab_add_alarm: {
-                        Intent intent = new Intent(MainActivity.this, AlarmActivity.class);
-                        startActivityForResult(intent, NEW_ALARM_ACTIVITY_REQUEST_CODE);
-                        //Intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
-                        //startActivity(intent);
-                        break;
-                    }
+        mainSpeedDial.setOnActionSelectedListener(actionItem -> {
+            switch (actionItem.getId()) {
+                case R.id.fab_add_alarm: {
 
-                    case R.id.fab_add_timer: {
-                        Intent intent = new Intent(MainActivity.this, TimerActivity.class);
-                        startActivityForResult(intent, NEW_TIMER_ACTIVITY_REQUEST_CODE);
-                        break;
-                    }
+                    addAlarmDialog.show(fragmentManager, "add_alarm_dialog");
+                    mainSpeedDial.close();
+                    break;
                 }
-                return true;
+                case R.id.fab_add_timer: {
+                    addTimerDialog.show(fragmentManager, "add_timer_dialog");
+                    mainSpeedDial.close();
+                    break;
+                }
+                default: {
+                    mainSpeedDial.close();
+                    break;
+                }
             }
+            return true;
         });
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == RESULT_OK) {
-            if(requestCode == NEW_ALARM_ACTIVITY_REQUEST_CODE ) {
-                AlarmEntity alarmEntity = (AlarmEntity) data.getSerializableExtra(AlarmActivity.EXTRA_REPLY);
-                alarmFragment.getViewModel().insert(alarmEntity);
-            } else if(requestCode == NEW_TIMER_ACTIVITY_REQUEST_CODE) {
-                TimerEntity timerEntity = (TimerEntity) data.getSerializableExtra(TimerActivity.EXTRA_REPLY);
-                alarmFragment.getViewModel().insert(timerEntity);
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:{
+                mDrawerLayout.openDrawer(GravityCompat.START);
+                mainSpeedDial.close();
+                return true;
             }
-
-            Toast.makeText(
-                    getApplicationContext(),
-                    R.string.saved,
-                    Toast.LENGTH_LONG).show();
-        } else {
-            Toast.makeText(
-                    getApplicationContext(),
-                    R.string.empty_not_saved,
-                    Toast.LENGTH_LONG).show();
         }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
-    public void onClick(View v) {
-        ft = fragmentManager.beginTransaction();
-
-        int id = v.getId();
-        switch (id) {
-            case R.id.alarm_page_btn:
-                ft.replace(R.id.fragment_container, alarmFragment);
-                ft.commit();
-                break;
-            case R.id.timer_page_btn:
-                ft.replace(R.id.fragment_container, timerFragment);
-                ft.commit();
-                break;
+    public void onBackPressed() {
+        if(mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+            mDrawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
         }
+    }
+
+    public void closeDrawer() {
+        mDrawerLayout.closeDrawer(GravityCompat.START);
     }
 }

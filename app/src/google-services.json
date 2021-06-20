@@ -1,0 +1,98 @@
+{
+  "project_info": {
+    "project_number": "302386323416",
+    "firebase_url": "https://subway-db-test1-default-rtdb.firebaseio.com",
+    "project_id": "subway-db-test1",
+    "storage_bucket": "subway-db-test1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:302386323416:android:d4f7b26273a37ae8879cad",
+        "android_client_info": {
+          "package_name": "com.alarminum.alarminumapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "302386323416-t45s3atg52l2b8oge3nbikvphtvtctg6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCw6JlJg0Qujj4qxuaXc5wEkc8XReRKkUs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "302386323416-t45s3atg52l2b8oge3nbikvphtvtctg6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:302386323416:android:86f1bb5e7d7a590b879cad",
+        "android_client_info": {
+          "package_name": "com.example.subway"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "302386323416-t45s3atg52l2b8oge3nbikvphtvtctg6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCw6JlJg0Qujj4qxuaXc5wEkc8XReRKkUs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "302386323416-t45s3atg52l2b8oge3nbikvphtvtctg6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:302386323416:android:9a557676446b54b4879cad",
+        "android_client_info": {
+          "package_name": "com.example.subway_test"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "302386323416-t45s3atg52l2b8oge3nbikvphtvtctg6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCw6JlJg0Qujj4qxuaXc5wEkc8XReRKkUs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "302386323416-t45s3atg52l2b8oge3nbikvphtvtctg6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
