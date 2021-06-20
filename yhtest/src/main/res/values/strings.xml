@@ -4,14 +4,14 @@
         <item>1호선</item>
         <item>2호선</item>
     </string-array>
-    <string-array name = "spinner_start">
+    <string-array name = "spinner_line1">
         <item>다대포해수욕장</item>
         <item>다대포항</item>
         <item>낫개</item>
         <item>신장림</item>
         <item>장림</item>
     </string-array>
-    <string-array name = "spinner_destination">
+    <string-array name = "spinner_line2">
         <item>장산</item>
         <item>중동</item>
         <item>해운대</item>
