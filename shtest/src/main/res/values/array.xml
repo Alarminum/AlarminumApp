@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="sizes">
+        <item></item>
+        <item>240</item>
+        <item>245</item>
+        <item>250</item>
+        <item>255</item>
+        <item>260</item>
+        <item>265</item>
+        <item>270</item>
+        <item>275</item>
+    </string-array>
+</resources>
