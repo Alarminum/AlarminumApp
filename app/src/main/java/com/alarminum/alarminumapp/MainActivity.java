@@ -5,6 +5,7 @@ import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
@@ -17,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.alarminum.alarminumapp.fragments.AddAlarmDialog;
 import com.alarminum.alarminumapp.fragments.AddTimerDialog;
+import com.alarminum.alarminumapp.fragments.AddTimetableDialog;
 import com.alarminum.alarminumapp.viewmodel.GroupListViewModel;
 import com.leinardi.android.speeddial.SpeedDialActionItem;
 import com.leinardi.android.speeddial.SpeedDialView;
@@ -29,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
     AddAlarmDialog addAlarmDialog;
     AddTimerDialog addTimerDialog;
+    AddTimetableDialog addTimetableDialog;
 
     DrawerLayout mDrawerLayout;
 
@@ -42,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+
 
         Toolbar mainToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mainToolbar);
@@ -70,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
 
         addAlarmDialog = new AddAlarmDialog();
         addTimerDialog = new AddTimerDialog();
+        addTimetableDialog = new AddTimetableDialog();
 
         ft = fragmentManager.beginTransaction();
         ft.add(R.id.fragment_container, alarmFragment);
@@ -110,6 +116,10 @@ public class MainActivity extends AppCompatActivity {
                     addTimerDialog.show(fragmentManager, "add_timer_dialog");
                     mainSpeedDial.close();
                     break;
+                }
+                case R.id.fab_add_timetable: {
+                    addTimetableDialog.show(fragmentManager, "add_timetable_dialog");
+                    mainSpeedDial.close();
                 }
                 default: {
                     mainSpeedDial.close();

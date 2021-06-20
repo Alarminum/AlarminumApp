@@ -6,12 +6,11 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
-import java.util.concurrent.TimeUnit;
 
 @Entity(tableName = "groups")
 public class AlarmGroup implements Serializable {
     @PrimaryKey(autoGenerate = true)
-    public int gid = 1;
+    public int gid = 0;
 
     public String label;
 

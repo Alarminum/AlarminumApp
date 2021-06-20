@@ -14,8 +14,11 @@ public interface AlarmGroupDao {
     @Query("SELECT * FROM groups")
     LiveData<List<AlarmGroup>> getAllGroups();
 
+    @Query("SELECT * FROM groups ORDER BY gid DESC LIMIT 1")
+    AlarmGroup getLatestGroup();
+
     @Insert
-    long insert(AlarmGroup group);
+    void insert(AlarmGroup group);
 
     @Update
     void update(AlarmGroup group);

@@ -20,12 +20,14 @@ public class GroupRepository  {
         groupDao = db.groupDao();
     }
 
-    public long insert(AlarmGroup group) {
-        AtomicLong gid = new AtomicLong();
+    public int getLatestGid() {
+        return groupDao.getLatestGroup().gid;
+    }
+
+    public void insert(AlarmGroup group) {
         AppExecutors.getInstance().getDiskIO().execute(() -> {
-            gid.set(groupDao.insert(group));
+            groupDao.insert(group);
         });
-        return gid.get();
     }
 
     public LiveData<List<AlarmGroup>> getAllGroups() {

@@ -64,7 +64,7 @@ public class TimeTableRepository {
 
             Connection.Response loginForm = Jsoup.connect("https://everytime.kr/user/login")
                     .userAgent(UserAgent)
-                    .timeout(3000)
+                    .timeout(10000)
                     .header("Origin", "https://everytime.kr")
                     .header("Referer", "https://everytime.kr/")
                     .header("Accept", Accept)
@@ -79,10 +79,9 @@ public class TimeTableRepository {
             data2.put("year", "2021");
             data2.put("semester", "1");
 
-            //들어갈 사이트 접속... 제발
             Connection.Response response = Jsoup.connect("https://api.everytime.kr/find/timetable/table/list/semester")
                     .userAgent(UserAgent)
-                    .timeout(3000)
+                    .timeout(10000)
                     .cookies(cookies)
                     .data(data2)
                     .header("Accept", "*/*")
@@ -102,7 +101,7 @@ public class TimeTableRepository {
             data3.put("id", semester);
             Connection.Response timetable = Jsoup.connect("https://api.everytime.kr/find/timetable/table")
                     .userAgent(UserAgent)
-                    .timeout(3000)
+                    .timeout(10000)
                     .cookies(cookies)
                     .data(data3)
                     .header("Accept", "*/*")
