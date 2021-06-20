@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.ListAdapter;
 import com.alarminum.alarminumapp.database.AlarmGroup;
 
 
-public class GroupListAdapter extends ListAdapter<AlarmGroup, GroupViewHolder> {
+public class GroupListAdapter extends ListAdapter<AlarmGroup,GroupViewHolder> {
     private FragmentManager fragmentManager;
     private FragmentTransaction ft;
     private Context context;

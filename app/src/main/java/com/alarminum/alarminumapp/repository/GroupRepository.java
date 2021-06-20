@@ -10,6 +10,7 @@ import com.alarminum.alarminumapp.database.AlarmGroupDao;
 import com.alarminum.alarminumapp.utils.AppExecutors;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicLong;
 
 public class GroupRepository  {
     private AlarmGroupDao groupDao;
@@ -19,10 +20,12 @@ public class GroupRepository  {
         groupDao = db.groupDao();
     }
 
-    public void insert(AlarmGroup group) {
+    public long insert(AlarmGroup group) {
+        AtomicLong gid = new AtomicLong();
         AppExecutors.getInstance().getDiskIO().execute(() -> {
-            groupDao.insert(group);
+            gid.set(groupDao.insert(group));
         });
+        return gid.get();
     }
 
     public LiveData<List<AlarmGroup>> getAllGroups() {

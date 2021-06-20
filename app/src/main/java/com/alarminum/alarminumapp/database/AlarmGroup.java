@@ -6,6 +6,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
+import java.util.concurrent.TimeUnit;
 
 @Entity(tableName = "groups")
 public class AlarmGroup implements Serializable {
@@ -17,18 +18,18 @@ public class AlarmGroup implements Serializable {
     @ColumnInfo(name = "group_type")
     public int groupType;
 
-    public int vibration = 1;
+    public boolean vibration = true;
 
     public String ringtone = null;
 
     @ColumnInfo(name = "setting_override")
-    public int settingOverride = 0;
+    public boolean settingOverride = false;
 
-    public int activated = 1;
+    public boolean activated = true;
 
     public AlarmGroup() {}
 
-    public AlarmGroup(String label, int groupType, int vibration, String ringtone, int settingOverride, int activated) {
+    public AlarmGroup(String label, int groupType, boolean vibration, String ringtone, boolean settingOverride, boolean activated) {
         this.label = label;
         this.groupType = groupType;
         this.vibration = vibration;
@@ -37,7 +38,7 @@ public class AlarmGroup implements Serializable {
         this.activated = activated;
     }
 
-    public AlarmGroup(int gid, String label, int groupType , int vibration, String ringtone, int settingOverride, int activated) {
+    public AlarmGroup(int gid, String label, int groupType , boolean vibration, String ringtone, boolean settingOverride, boolean activated) {
         this.gid = gid;
         this.label = label;
         this.groupType = groupType;

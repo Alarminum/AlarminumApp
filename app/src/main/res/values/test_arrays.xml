@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="spinner_entries">
+        <item >Android Dev Summit</item>
+        <item >Android I/O</item>
+        <item >1234124</item>
+        <item >asdfasdfasd</item>
+        <item >%^**^(%(^</item>
+        <item >::U:IUB:IB</item>
+        <item >부산역</item>
+        <item >HELLOOOOO</item>
+        <item >wowowow</item>
+    </string-array>
+</resources>

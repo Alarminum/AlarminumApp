@@ -15,7 +15,7 @@ public interface AlarmGroupDao {
     LiveData<List<AlarmGroup>> getAllGroups();
 
     @Insert
-    void insert(AlarmGroup group);
+    long insert(AlarmGroup group);
 
     @Update
     void update(AlarmGroup group);
