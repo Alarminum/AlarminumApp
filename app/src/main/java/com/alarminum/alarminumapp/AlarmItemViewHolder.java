@@ -17,14 +17,13 @@ import com.alarminum.alarminumapp.databinding.AlarmdetailBinding;
 
 public class AlarmItemViewHolder extends RecyclerView.ViewHolder {
     private AlarmEntity alarm;
-    private final AlarmdetailBinding binding;
+    public final AlarmdetailBinding binding;
 
     public AlarmItemViewHolder(AlarmdetailBinding binding) {
         super(binding.getRoot());
         this.binding = binding;
     }
 
-    @SuppressLint("SetTextI18n")
     public void bind(AlarmEntity alarm) {
         this.alarm = alarm;
         binding.alarmDetailTitle.setText(alarm.label);

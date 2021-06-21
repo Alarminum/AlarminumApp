@@ -70,9 +70,9 @@ public class AlarmListAdapter extends ListAdapter<AlarmEntity, AlarmItemViewHold
             holder.bind(current);
 
             boolean isSelected = selectionTracker.isSelected((long) position);
-            binding.alarmDetailHeader.setAlpha((float) (isSelected ? 0.5 : 1.0));
+            holder.binding.alarmDetailHeader.setAlpha((float) (isSelected ? 0.5 : 1.0));
 
-            binding.alarmDetailHeader.setOnClickListener(v->{
+            holder.binding.alarmDetailHeader.setOnClickListener(v->{
                 if(position == expandedItemPosition) {
                     notifyItemChanged(position);
                     expandedItemPosition = -1;
@@ -86,15 +86,15 @@ public class AlarmListAdapter extends ListAdapter<AlarmEntity, AlarmItemViewHold
             });
 
 
-            binding.alarmUpdown.setRotation((position == expandedItemPosition) ? 0.0f : 180.0f);
-            binding.alarmDetailContainer.setVisibility((position == expandedItemPosition) ? View.VISIBLE : View.GONE);
+            holder.binding.alarmUpdown.setRotation((position == expandedItemPosition) ? 0.0f : 180.0f);
+            holder.binding.alarmDetailContainer.setVisibility((position == expandedItemPosition) ? View.VISIBLE : View.GONE);
 
-            binding.alarmDetailSwitch.setOnCheckedChangeListener((v, isChecked)->{
+            holder.binding.alarmDetailSwitch.setOnCheckedChangeListener((v, isChecked)->{
                 if(isChecked) {
                     Calendar calendar = Calendar.getInstance();
                     calendar.setTimeInMillis(System.currentTimeMillis());
-                    calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(binding.alarmDetailHour.getText().toString()));
-                    calendar.set(Calendar.MINUTE, Integer.parseInt(binding.alarmDetailMinute.getText().toString()));
+                    calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(holder.binding.alarmDetailHour.getText().toString()));
+                    calendar.set(Calendar.MINUTE, Integer.parseInt(holder.binding.alarmDetailMinute.getText().toString()));
                     calendar.set(Calendar.SECOND, 0);
 
                     // 이미 지난 시간을 지정했다면 다음날 같은 시간으로 설정
@@ -104,10 +104,10 @@ public class AlarmListAdapter extends ListAdapter<AlarmEntity, AlarmItemViewHold
 
                     Date currentDateTime = calendar.getTime();
                     String date_text = new SimpleDateFormat("yyyy년 MM월 dd일 EE요일 a hh시 mm분 ", Locale.getDefault()).format(currentDateTime);
-                    Toast.makeText(binding.getRoot().getContext().getApplicationContext(),date_text + "으로 알람이 설정되었습니다!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(holder.binding.getRoot().getContext().getApplicationContext(),date_text + "으로 알람이 설정되었습니다!", Toast.LENGTH_SHORT).show();
 
                     //  Preference에 설정한 값 저장
-                    SharedPreferences.Editor editor = binding.getRoot().getContext().getSharedPreferences("daily alarm", MODE_PRIVATE).edit();
+                    SharedPreferences.Editor editor = holder.binding.getRoot().getContext().getSharedPreferences("daily alarm", MODE_PRIVATE).edit();
                     editor.putLong("nextNotifyTime", (long)calendar.getTimeInMillis());
                     editor.apply();
 

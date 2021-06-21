@@ -7,6 +7,10 @@ import androidx.lifecycle.LiveData;
 import com.alarminum.alarminumapp.database.StationDao;
 import com.alarminum.alarminumapp.database.StationDatabase;
 import com.alarminum.alarminumapp.database.StationEntity;
+import com.alarminum.alarminumapp.utils.AppExecutors;
+import com.alarminum.alarminumapp.utils.Result;
+
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -18,19 +22,32 @@ public class StationRepository {
         stationDao = db.stationDao();
     }
 
-    public LiveData<List<StationEntity>> getAllStations() {
+    public List<StationEntity> getAllStations() {
         return stationDao.getAllStations();
     }
 
-    public LiveData<List<StationEntity>> getAllStationsWithLine(int lineNum) {
+    public List<String> getAllStationsWithLine(int lineNum) {
         return stationDao.getAllStationsWithLine(lineNum);
     }
 
-    public int getStationWithName(String sName) {
-        return stationDao.getStationWithName(sName);
+    public void getStationWithName(String sName, final RepositoryCallback<Integer> callback) {
+        AppExecutors.getInstance().getDiskIO().execute(() -> {
+            try {
+                Result<Integer> result = getStationWithNameSync(sName);
+                callback.onComplete(result);
+            } catch (Exception e) {
+                Result<Integer> errorResult = new Result.Error<>(e);
+                callback.onComplete(errorResult);
+            }
+        });
     }
 
-    public StationEntity getIntersectionWithNameAndLine(String sName, int currentLinenum) {
-        return stationDao.getIntersectionWithNameAndLine(sName, currentLinenum);
+    private Result<Integer> getStationWithNameSync(String sName) {
+        try {
+            int sid = stationDao.getStationWithName(sName);
+            return new Result.Success<>(sid);
+        } catch (Exception e) {
+            return new Result.Error<>(e);
+        }
     }
 }
