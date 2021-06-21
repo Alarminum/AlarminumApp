@@ -1,7 +1,9 @@
 package com.alarminum.alarminumapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -107,7 +109,6 @@ public class MainActivity extends AppCompatActivity {
         mainSpeedDial.setOnActionSelectedListener(actionItem -> {
             switch (actionItem.getId()) {
                 case R.id.fab_add_alarm: {
-
                     addAlarmDialog.show(fragmentManager, "add_alarm_dialog");
                     mainSpeedDial.close();
                     break;
@@ -119,6 +120,10 @@ public class MainActivity extends AppCompatActivity {
                 }
                 case R.id.fab_add_timetable: {
                     addTimetableDialog.show(fragmentManager, "add_timetable_dialog");
+                    mainSpeedDial.close();
+                }
+                case R.id.fab_add_metro: {
+
                     mainSpeedDial.close();
                 }
                 default: {
@@ -153,5 +158,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void closeDrawer() {
         mDrawerLayout.closeDrawer(GravityCompat.START);
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        Toast.makeText(this, "타이머가 종료되었습니다", Toast.LENGTH_SHORT ).show();
     }
 }

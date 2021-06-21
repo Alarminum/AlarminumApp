@@ -9,19 +9,19 @@ import androidx.recyclerview.widget.ListAdapter;
 import com.alarminum.alarminumapp.database.TimerEntity;
 
 
-public class TimerListAdapter extends ListAdapter<TimerEntity, TimerItemViewHolder> {
+public class TimerListAdapter extends ListAdapter<TimerEntity, TimerViewHolder> {
     public TimerListAdapter(@NonNull DiffUtil.ItemCallback<TimerEntity> diffCallback) {
         super(diffCallback);
     }
 
     @NonNull
     @Override
-    public TimerItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return TimerItemViewHolder.create(parent);
+    public TimerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return TimerViewHolder.create(parent);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull TimerItemViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull TimerViewHolder holder, int position) {
         TimerEntity current = getItem(position);
         holder.bind(current);
     }

@@ -102,8 +102,6 @@ public class AlarmFragment extends Fragment {
         SimpleDateFormat HourFormat = new SimpleDateFormat("kk", Locale.getDefault());
         SimpleDateFormat MinuteFormat = new SimpleDateFormat("mm", Locale.getDefault());
 
-
-
         return view;
     }
 
