@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:background="#FF9800"
+        android:background="@color/white"
         android:gravity="center"
         android:orientation="vertical"
         android:weightSum="5">
@@ -115,7 +115,7 @@
                 android:layout_height="60dp"
                 android:layout_gravity="bottom|right"
                 android:layout_weight="1"
-                android:backgroundTint="#FF9800"
+                android:backgroundTint="@color/white"
                 app:srcCompat="@android:drawable/arrow_up_float" />
         </LinearLayout>
 
@@ -125,7 +125,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:background="#8BC34A"
+        android:background="@color/cardview_shadow_start_color"
         android:orientation="vertical">
 
         <LinearLayout

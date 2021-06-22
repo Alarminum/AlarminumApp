@@ -9,13 +9,15 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="300dp"
         android:layout_height="400dp"
-        android:background="#FF9800">
+        android:background="@color/cardview_shadow_start_color">
 
         <Button
             android:id="@+id/login_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
+            android:background="@color/white"
+            android:backgroundTint="@color/white"
             android:text="불러오기"
             android:textSize="12sp"
             app:layout_constraintBaseline_toBaselineOf="@+id/join_button"
@@ -26,6 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="40dp"
+            android:background="@color/white"
             android:ems="10"
             android:hint="아이디"
             android:inputType="textEmailAddress"
@@ -41,6 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:layout_marginBottom="24dp"
+            android:background="@color/white"
             android:ems="10"
             android:hint="비밀번호"
             android:inputType="textPassword"
@@ -48,21 +52,13 @@
             app:layout_constraintBottom_toTopOf="@+id/login_button"
             app:layout_constraintStart_toStartOf="@+id/login_id" />
 
-        <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
-            android:layout_marginBottom="41dp"
-            app:layout_constraintBottom_toTopOf="@+id/login_id"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:srcCompat="@drawable/nav" />
-
         <Button
             android:id="@+id/join_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="190dp"
+            android:background="@color/white"
+            android:backgroundTint="@color/white"
             android:text="취소"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -72,8 +68,8 @@
             android:id="@+id/button2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="#FF9800"
-            android:backgroundTint="#FF9800"
+            android:background="@color/white"
+            android:backgroundTint="@color/white"
             android:text="에프리타임 페이지로 이동"
             android:textColor="@color/white"
             android:textSize="12sp"

@@ -7,4 +7,23 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="drawer_open">Drawer open</string>
     <string name="drawer_close">Drawer close</string>
+    <string-array name = "spinner_line">
+        <item>1호선</item>
+        <item>2호선</item>
+    </string-array>
+    <string-array name = "spinner_line1">
+        <item>다대포해수욕장</item>
+        <item>다대포항</item>
+        <item>낫개</item>
+        <item>신장림</item>
+        <item>장림</item>
+    </string-array>
+    <string-array name = "spinner_line2">
+        <item>장산</item>
+        <item>중동</item>
+        <item>해운대</item>
+        <item>동백</item>
+        <item>센텀시티</item>
+        <item>민락</item>
+    </string-array>
 </resources>

@@ -6,87 +6,99 @@
     <LinearLayout
         android:layout_width="300dp"
         android:layout_height="360dp"
-        android:background="#D1C5A3"
+        android:background="@color/cardview_shadow_start_color"
         android:gravity="center"
         android:orientation="vertical"
         android:padding="24dp">
+
         <EditText
             android:id="@+id/timer_title_edit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="제목"
-            android:maxLines="1"/>
+            android:maxLines="1" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+
             <EditText
                 android:id="@+id/timer_hour_edit"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:hint="시"
-                android:maxLines="1"/>
+                android:maxLines="1" />
+
             <EditText
                 android:id="@+id/timer_minute_edit"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:hint="분"
-                android:maxLines="1"/>
+                android:maxLines="1" />
+
             <EditText
                 android:id="@+id/timer_second_edit"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:hint="초"
-                android:maxLines="1"/>
+                android:maxLines="1" />
+
             <CheckBox
                 android:id="@+id/timer_disposable_check"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="일회성"
-                android:textAppearance="?android:textAppearanceMedium"/>
+                android:textAppearance="?android:textAppearanceMedium" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+
             <CheckBox
                 android:id="@+id/timer_vib_check"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="48dp"
-                android:text="진동"/>
+                android:text="진동" />
+
             <EditText
                 android:id="@+id/timer_ringtone_edit"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:hint="벨소리"/>
+                android:hint="벨소리" />
         </LinearLayout>
+
         <EditText
             android:id="@+id/timer_group_edit"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:hint="타이머 그룹명"
-            android:maxLines="1"/>
+            android:maxLines="1" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+
             <Button
                 android:id="@+id/save_timer_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="36dp"
-                android:text="저장"/>
+                android:text="저장" />
+
             <Button
                 android:id="@+id/cancel_timer_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="취소"/>
+                android:text="취소" />
         </LinearLayout>
 
     </LinearLayout>

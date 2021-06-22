@@ -28,21 +28,21 @@ public class MetroFirestoreRepository {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     CollectionReference subway = db.collection("subway");
 
-    public void makeMetroTravelTimeRequest(int startCode1, int endCode1, int startCode2, int endCode2, final RepositoryCallback<Integer> callback) {
+    public void makeMetroTravelTimeRequest(int startCode1, int endCode1, int startCode2, int endCode2, final RepositoryCallback<Integer[]> callback) {
         AppExecutors.getInstance().getNetworkIO().execute(() -> {
                     try {
                         makeSyncMetroTravelTimeRequest(startCode1, endCode1, startCode2, endCode2, r -> {
                             callback.onComplete(r);
                         });
                     } catch (Exception e) {
-                        Result<Integer> errorResult = new Result.Error<>(e);
+                        Result<Integer[]> errorResult = new Result.Error<>(e);
                         callback.onComplete(errorResult);
                     }
                 }
         );
     }
 
-        private void makeSyncMetroTravelTimeRequest ( int startCode1, int endCode1, int startCode2, int endCode2, final RepositoryCallback<Integer> callback) {
+        private void makeSyncMetroTravelTimeRequest ( int startCode1, int endCode1, int startCode2, int endCode2, final RepositoryCallback<Integer[]> callback) {
             Integer[] start = new Integer[2];
             Integer[] end = new Integer[2];
             start[0] = startCode1;
@@ -52,6 +52,7 @@ public class MetroFirestoreRepository {
                 end[0] = endCode1;
                 end[1] = endCode2;
             }
+
 
             Integer[] resultIntervals = new Integer[2];
 
@@ -89,6 +90,8 @@ public class MetroFirestoreRepository {
 
                                             });
                                 }
+                                Result<Integer[]> results = new Result.Success<>(resultIntervals);
+                                callback.onComplete(results);
                             }
 
                     });

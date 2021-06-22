@@ -25,6 +25,8 @@ import com.alarminum.alarminumapp.viewmodel.GroupListViewModel;
 import com.leinardi.android.speeddial.SpeedDialActionItem;
 import com.leinardi.android.speeddial.SpeedDialView;
 
+import java.text.BreakIterator;
+
 public class MainActivity extends AppCompatActivity {
     FragmentManager fragmentManager;
     FragmentTransaction ft;
@@ -121,9 +123,11 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.fab_add_timetable: {
                     addTimetableDialog.show(fragmentManager, "add_timetable_dialog");
                     mainSpeedDial.close();
+                    break;
                 }
                 case R.id.fab_add_metro: {
-
+                    Intent intent = new Intent(MainActivity.this, MetroActivity.class);
+                    startActivityForResult(intent, 5);
                     mainSpeedDial.close();
                 }
                 default: {

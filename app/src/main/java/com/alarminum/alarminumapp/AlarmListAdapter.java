@@ -112,7 +112,6 @@ public class AlarmListAdapter extends ListAdapter<AlarmEntity, AlarmItemViewHold
                     editor.apply();
 
                     diaryNotification(calendar);
-                    notifyItemChanged(position);
                 }
             });
 

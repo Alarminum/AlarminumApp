@@ -1,64 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginVertical="10dp"
-    android:background="@color/teal_200">
+    android:background="@color/cardview_shadow_start_color"
+    android:orientation="vertical">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="20dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingHorizontal="20dp">
+
         <TextView
             style="@style/timer_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
-            android:text="호선"/>
+            android:background="@color/cardview_shadow_end_color"
+            android:text="호선" />
 
         <Spinner
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            />
+            android:entries="@array/spinner_entries" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="20dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingHorizontal="20dp">
+
         <TextView
             style="@style/timer_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
-            android:text="출발역"/>
+            android:background="@color/cardview_shadow_end_color"
+            android:text="출발역" />
 
         <Spinner
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:entries="@array/spinner_entries"/>
+            android:entries="@array/spinner_entries" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="20dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingHorizontal="20dp">
+
         <TextView
             style="@style/timer_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
-            android:text="도착역"/>
+            android:background="@color/cardview_shadow_end_color"
+            android:text="도착역" />
 
         <Spinner
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:entries="@array/spinner_entries"/>
+            android:entries="@array/spinner_entries" />
     </LinearLayout>
 
 
